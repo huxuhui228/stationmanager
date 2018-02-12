@@ -1,0 +1,27 @@
+{% extends './base.html' %}
+<div>
+{% block main %}
+<div>
+{% include './filterTag.html' %}
+{% include './searchField.html' %}
+<table>
+    <tr>
+    <th>序号</th><th>id</th><th>型号</th><th>序列号</th><th>备注</th>
+    </tr>
+    {% for device in device_list %}
+    <tr>
+    <td>{{ forloop.counter }}</td>
+    <td><a href="{{ device.id }}">{{ device.id }}</a></td>
+    <td>{{ device.serial_num }}</td>
+    <td>{{ device.equip_type }}</td>
+    <td>{{ device.note }}</td>
+    <td><a href="{{ device.id }}/delete" >delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+
+{% include './paginator.html' %}
+<a href="javascript:history.go(-1);">返回上一页</a>
+{% endblock %}
+</div>

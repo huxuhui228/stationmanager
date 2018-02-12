@@ -1,0 +1,7 @@
+{% block loginMenu %}
+{% if user.is_authenticated %}
+<div id="loginMenu"><a href="{% url 'manager:logout' %}">Log Out</a></div>
+{% else %}
+<div id="loginMenu"><a href="{% url 'manager:login' %}">Log In</a></div>
+{% endif %}
+{% endblock %}

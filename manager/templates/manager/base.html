@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+    <title>manager</title>
+    {% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'manager/my.css' %}" />
+    <script type="text/javascript" src="{% static 'manager/jquery-3.3.1.min.js' %}"></script>
+</head>
+<body>
+<header>
+<div id="slogen">我们不维修仪器，我们只是仪器的搬运工。</div>
+{% if user.is_authenticated %}
+<div id="loginMenu"><a href="{% url 'manager:logout' %}">Log Out</a></div>
+{% else %}
+<div id="loginMenu"><a href="{% url 'manager:login' %}">Log In</a></div>
+{% endif %}
+
+</header>
+{% block body %}
+<!-- 侧边栏 -->
+{% if user.is_authenticated %}
+<nav class="tree">
+    <li>
+       <label class="level1menu"><a href="{% url 'manager:home' %}">Home</a></label>
+    </li>
+    <li>
+        <label class="level1menu">设备</label>
+        <ol class="level2folder">
+             <li class="level2menu"><a href="{% url 'manager:deviceIndex' %}">查询</a></li>
+             <li class="level2menu"><a href="{% url 'manager:newDeviceRecord' %}">新建</a></li>
+        </ol>
+
+    </li>
+    <li>
+        <label class="level1menu">邮寄</label>
+        <ol class="level2folder">
+             <li class="level2menu"><a href="{% url 'manager:deleveryIndex' %}">查询</a></li>
+             <li class="level2menu"><a href="{% url 'manager:newDeleveryRecord' %}">新建</a></li>
+        </ol>
+
+    </li>
+    <li >
+        <label class="level1menu" >台站</label>
+        <ol class="level2folder">
+            <li class="level2menu"><a href="{% url 'manager:stationIndex' %}">查询</a></li>
+            <li class="level2menu"><a href="{% url 'manager:newStationRecord' %}">新建</a></li>
+        </ol>
+    </li>
+
+</nav>
+{% endif %}
+<!-- 主体部分  -->
+<section class="main">
+{% block main %}{% endblock %}
+</section>
+{% endblock %}
+<footer>
+footer.
+</footer>
+<script type="text/javascript" src="{% static 'manager/layer/layer.js' %}"></script>
+<script type="text/javascript" src="{% static 'manager/my.js' %}"></script>
+</body>
+</html> 

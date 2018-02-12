@@ -1,0 +1,21 @@
+<div id="search_field">
+ <h3>筛选：</h3>
+ <div>
+ <h4>市域：</h4>
+  {% for district in districts %}
+       <a href="javascript:;"><span class="text" onclick="setFilter('district',{{ district.id }})">{{ district }}</span></a>
+  {% endfor %}
+
+ <h4>手段：</h4>
+  {% for mean in measure_means %}
+       <a href="javascript:;" ><span onclick="setFilter('measure_means',{{ mean.id }})">{{ mean }}</span></a>
+  {% endfor %}
+ </div>
+<form id="search_form">
+    <input type="text" />
+    <button type="submit">搜索</button>
+</form>
+<a href="./deleveryIndex?" >未返回</a><br>
+<a href="" >已返回</a><br>
+<a href="" >无需返回</a>
+</div>

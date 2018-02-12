@@ -1,0 +1,29 @@
+{% if is_paginated %}
+<div class="pagination">
+  <ul>
+    {% if page_obj.has_previous %}
+    <span><a href="?page={{ page_obj.previous_page_number }}">前一页</a></span>
+    {% else %}
+    <span class="active"><a>前一页</a></span>
+    {% endif %}
+	 {% if page_obj.paginator.num_pages < 5 %}
+	      {{ page_range_list }} = {{ page_obj.paginator.page_range }}
+	 {% else %}
+	     {{page_rang_list}} = [{{ page_obj.number }}-2,{{ page_obj.number }}-1,{{page_obj.number}},{{page_obj.number}}+1,{{page_obj.number}}+2}
+	 {% endif %}
+    {% for p in page_range_list %}
+        {% ifequal p page_obj.number %}
+            <span class="active"><a>{{p}}</a></span>
+        {% else %}
+            <span><a href="?page={{p}}" title="第{{p}}页">{{p}}</a></span>
+        {% endifequal %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <span><a href="?page={{ page_obj.next_page_number }}">后一页</a></span>
+    {% else %}
+    <span class="active"> <a>后一页</a></span>
+    {% endif %}
+  </ul>
+</div>
+{% endif %}

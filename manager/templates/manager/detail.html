@@ -1,0 +1,10 @@
+{% extends './base.html'%}
+{% block titlle %}delevery list{% endblock %}
+{% block main %}
+<form class="detail"  method="POST">
+{% csrf_token %}
+{{ form.as_p }}
+<input class="submitButton" type="submit" value="Submit" />
+</form>
+<a href="javascript:history.go(-1);">返回上一页</a>
+{% endblock %}

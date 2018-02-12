@@ -1,0 +1,7 @@
+[2017-04-02 15:40:31 +0800] [13018] [INFO] Starting gunicorn 19.7.1
+[2017-04-02 15:40:31 +0800] [13018] [INFO] Listening at: http://127.0.0.1:8000 (13018)
+[2017-04-02 15:40:31 +0800] [13018] [INFO] Using worker: gevent
+[2017-04-02 15:40:31 +0800] [13021] [INFO] Booting worker with pid: 13021
+Not Found: /
+[2017-04-02 15:59:01 +0800] [13021] [INFO] Parent changed, shutting down: <Worker 13021>
+[2017-04-02 15:59:01 +0800] [13021] [INFO] Worker exiting (pid: 13021)
