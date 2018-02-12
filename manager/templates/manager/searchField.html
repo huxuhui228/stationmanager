@@ -3,12 +3,12 @@
  <div>
  <h4>市域：</h4>
   {% for district in districts %}
-       <a href="javascript:;"><span class="text" onclick="setFilter('district',{{ district.id }})">{{ district }}</span></a>
+       <a href="javascript:;"><span class="unselected" onclick="setFilter('district',{{ district.id }})">{{ district }}</span></a>
   {% endfor %}
 
  <h4>手段：</h4>
   {% for mean in measure_means %}
-       <a href="javascript:;" ><span onclick="setFilter('measure_means',{{ mean.id }})">{{ mean }}</span></a>
+       <a href="javascript:;" ><span class="unselected" onclick="setFilter('measure_means',{{ mean.id }})">{{ mean }}</span></a>
   {% endfor %}
  </div>
 <form id="search_form">

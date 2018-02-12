@@ -1,14 +1,15 @@
 body {
-	font - family: sans - serif;
-	background - color: # EEFFFF;
+	font-family: sans-serif;
+	background-color: #EEFFFF;
+	}
+header {
 }
-header {}
-# slogen {
-	text - align: center;
+#slogen {
+	text-align: center;
 	display: inline;
-}
-# loginMenu {
-	background - color: #79DFCD;
+	}
+#loginMenu {
+	background-color: #79DFCD;
 	float: right;
 	display: inline;
 }
@@ -18,48 +19,48 @@ nav {
 	margin: 20px;
 	margin-left: 0;
 	padding: 0px;
-	background-color:# f2f2f2;
+	background-color:#f2f2f2;
 	overflow: hidden;
 	float: left;
-}
+	}
 /*所有菜单项设置统一样式*/
 .tree li {
 	position: relative;
-	list - style: none;
-	margin: 0 px;
-	padding: 0 px;
-}
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	}
 /*一级菜单加下边线*/
-.tree li {
-	border - bottom: 1 px solid # d9d9d9;
-}
+.tree li{
+	border-bottom: 1px solid #d9d9d9;
+	}
 /*给有子菜单的菜单项添加背景图标*/
 .tree li label {
-	max - width: 999 px;
+	max-width:999px;
 	cursor: pointer;
 	display: block;
-	margin: 0 px;
-	padding: 15 px 10 px 15 px 70 px;
-	text - align: left;
-	white - space: nowrap;
-	overflow: hidden;
-}
+	margin: 0px;
+	padding: 15px 10px 15px 70px;
+	text-align: left;
+	white-space:nowrap;
+	overflow:hidden;
+	}
 .tree li ol {
 	cursor: pointer;
 	display: block;
-	margin: 0 px;
-	background - position: 95 % 50 % ;
-	white - space: nowrap;
-	overflow: hidden;
-}
-.tree.level2folder {
-		text - align: left;
-		margin: 0 px;
-		padding: 0 px;
+	margin: 0px;
+	background-position:95% 50%;
+	white-space:nowrap;
+	overflow:hidden;
 	}
-	/*不同层级的菜单字体大小不同*/
-	.tree.level1menu {
-		background - color: #99CCCC;
+.tree .level2folder {
+	text-align: left;
+	margin: 0px;
+	padding: 0px;
+	}
+/*不同层级的菜单字体大小不同*/
+.tree .level1menu{
+	background-color:#99CCCC;
 	padding:0px;
 	margin:0px;
 	font-size: 18px;
@@ -69,34 +70,35 @@ nav {
 	padding:0;
 	margin:0;
 	font-size:16px;
-	background-color:# a7a7a7;
-		text - align: center;
+	background-color:#a7a7a7;
+	text-align: center;
 	}
 
+
 section {
-	float: left;
-	padding: 10 px;
-	min - height: 600 px;
-	width: 70 % ;
+    float:left;
+    padding:10px;
+    min-height:600px;
+    width: 70%;
 }
 footer {
-	clear: both;
-	text - align: center;
-	padding: 5 px;
+    clear:both;
+    text-align:center;
+    padding:5px;
 }
 textarea {
-	vertical - align: top;
-	height: 200 px;
-	width: 600 px;
+    vertical-align:top;
+    height: 200px;
+    width: 600px;
 }
-# search_field, # search_form {
-	margin: 20 px;
-	text - align: center;
-	width: 250 px;
-	float: right;
+#search_field, #search_form{
+margin:20px;
+text-align:center;
+width:250px;
+float: right;
 }
-table, table tr th, table tr td {
-	border: 1 px solid #0094ff;
+table,table tr th, table tr td {
+	border:1px solid #0094ff;
 	}
 table {
 	min-height: 25px;
@@ -126,4 +128,8 @@ form label {
 	width: 10em;
 	margin-right: 1em;
 	text-align: right;
+}
+.selected {
+    background-color: #FFFFCC;
+    border: 1px solid;
 }

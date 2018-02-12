@@ -33,6 +33,8 @@ function deleteStation(id){
       );
 }
 function setFilter(par,par_val){
+    $(this).attr("class","selected");
+    $("span").not(this).attr("class","unselected");
     var str = window.location.href;
     if (str.indexOf("\?") != -1){
         var ss = str.split("?");

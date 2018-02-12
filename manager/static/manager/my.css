@@ -129,3 +129,12 @@ form label {
 	margin-right: 1em;
 	text-align: right;
 }
+.selected {
+    background-color: #FFFFCC;
+    border: 1px solid;
+}
+
+.unselected {
+    background-color: ;
+    border: ;
+}

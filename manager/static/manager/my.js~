@@ -33,6 +33,8 @@ function deleteStation(id){
       );
 }
 function setFilter(par,par_val){
+    $(this).attr("class","selected");
+    $(this).parentNode.not(this).attr("class","unselected");
     var str = window.location.href;
     if (str.indexOf("\?") != -1){
         var ss = str.split("?");
@@ -43,6 +45,9 @@ function setFilter(par,par_val){
             filter_para[pars[0]] = pars[1];
 
         })
+    }
+    else {
+        parent_link = str;
     }
     filter_para[par] = par_val;
     console.log(par+">>>>>>"+par_val);
