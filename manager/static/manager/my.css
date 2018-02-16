@@ -81,22 +81,45 @@ section {
     min-height:600px;
     width: 70%;
 }
+
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.districtFilter , .meanFilter {
+    display: flex;
+    text-align: center;
+    
+}
+.filterName {
+    text-align: center;
+}
+.districtFilter a, .meanFilter a {
+    margin: 2px;
+    width: 40px;
+}
+.selected {
+    background-color: #FFCCCC;
+    border: 1px;
+}
+
+.unselected {
+    background-color: ;
+    border: ;
+
+}
 footer {
     clear:both;
     text-align:center;
-    padding:5px;
+    padding: 5px;
 }
 textarea {
     vertical-align:top;
     height: 200px;
     width: 600px;
 }
-#search_field, #search_form{
-margin:20px;
-text-align:center;
-width:250px;
-float: right;
-}
+
 table,table tr th, table tr td {
 	border:1px solid #0094ff;
 	}
@@ -128,13 +151,4 @@ form label {
 	width: 10em;
 	margin-right: 1em;
 	text-align: right;
-}
-.selected {
-    background-color: #FFFFCC;
-    border: 1px solid;
-}
-
-.unselected {
-    background-color: ;
-    border: ;
 }

@@ -124,3 +124,4 @@ STATIC_ROOT = os.path.join(BASE_DIR,'static/')
 
 DATETIME_FORMAT = 'Y-m-d H:i:s'
 DATE_FORMAT = 'Y-m-d'
+MEDIA_ROOT = './data/media/'

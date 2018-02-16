@@ -51,7 +51,7 @@ class station(models.Model):
     address = models.CharField(max_length=256,default='',null=True,blank=True)
     staff_name = models.CharField(max_length=32,default='',null=True,blank=True)
     phone = models.CharField(max_length=32,default='',null=True,blank=True)
-    image = models.ImageField(null=True,default='',blank=True)
+    image = models.ImageField(upload_to = 'station_img/',null=True,default='',blank=True)
     note = models.TextField(max_length=256,null=True,blank=True)
 
     class Meta:

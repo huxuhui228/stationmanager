@@ -1,0 +1,17 @@
+
+<table>
+    <th>序号</th><th>名称</th><th>编号</th><th>手段</th><th>市域</th><th></th>
+    {% for station in station_list %}
+    <tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ station.name_cn }}</td>
+    <td>{{ station.code }}</td>
+    <td>{{ station.measure_means }}</td>
+    <td>{{ station.district }}</td>
+    <td><a href="{% url 'manager:stationDetail' station.id %}" ><button>edit</button></a>
+    <button onclick="deleteStation({{ station.id }})" >delete</button></td>
+    </tr>
+    {% endfor %}
+</table>
+{% include './paginator.html' %}
+<a href="javascript:history.go(-1);">返回上一页</a>

@@ -1,7 +1,7 @@
 {% extends './base.html'%}
 {% block titlle %}delevery list{% endblock %}
 {% block main %}
-<form class="detail" action="#" method="POST">
+<form class="detail"  method="POST">
 {% csrf_token %}
 {{ form.as_p }}
 <input class="submitButton" type="submit" value="Submit" />
