@@ -1,15 +1,11 @@
 {% extends "./base.html" %}
-{% block loginMenu %}
-{% if user.is_authenticated %}
-<div id="loginMenu"><a href="{% url 'manager:logout' %}">Log Out</a></div>
-{% else %}
-<div id="loginMenu"><a href="{% url 'manager:login' %}">Log In</a></div>
-{% endif %}
-{% endblock %}
+
 {% block body %}
 {% if not user.is_authenticated %}
+<div class="loginDiv">
 <form method="post" action="{% url 'manager:login' %}">
 {% csrf_token %}
+<center>
 <table>
 <tr>
     <td>{{ form.username.label_tag }}</td>
@@ -20,8 +16,11 @@
     <td>{{ form.password }}</td>
 </tr>
 </table>
+
 <input type="submit" value="login" />
 <input type="hidden" name="next" value="{% url 'manager:home' %}" />
+</center>
 </form>
+</div>
 {% endif %}
 {% endblock %}

@@ -279,13 +279,19 @@ def stationDetailView(request, pk):
     if pk and request.method=='GET':
         form = StationDetailForm(instance=record)
     elif request.method=='POST':
-        form = StationDetailForm(request.POST, instance=record)
+        form = StationDetailForm(request.POST, request.FILES, instance=record)
+        print(request.FILES)
         if form.is_valid():
+            files = request.FILES.getlist('image')
+            for f in files:
+                fw = open(f.name,'wb+')
+                for chunk in f.chunks():
+                    fw.write(chunk)
+                fw.close()
             form.save()
             return redirect(reverse('manager:stationIndex'))
     else:
         form = StationDetailForm()
-    print(form)
     return render(request, 'manager/detail.html', {'form':form})
 
 @login_required(login_url=('/manager/login'))
