@@ -86,6 +86,7 @@ class equip_type(models.Model):
     class Meta:
         verbose_name = '设备类型'
         verbose_name_plural = '设备类型'
+        ordering = ["model"]
     def __str__(self):
         return self.model
 

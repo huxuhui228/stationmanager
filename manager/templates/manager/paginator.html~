@@ -6,12 +6,8 @@
     {% else %}
     <span class="active"><a>前一页</a></span>
     {% endif %}
-	 {% if page_obj.paginator.num_pages < 5 %}
-	      {{ page_range_list }} = {{ page_obj.paginator.page_range }}
-	 {% else %}
-	     {{page_rang_list}} = [{{ page_obj.number }}-2,{{ page_obj.number }}-1,{{page_obj.number}},{{page_obj.number}}+1,{{page_obj.number}}+2}
-	 {% endif %}
-    {% for p in page_range_list %}
+
+    {% for p in page_obj.paginator.page_range %}
         {% ifequal p page_obj.number %}
             <span class="active"><a>{{p}}</a></span>
         {% else %}

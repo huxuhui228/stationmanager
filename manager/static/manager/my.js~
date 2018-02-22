@@ -3,6 +3,20 @@ var filter_para = {};
 $(document).ready(
 
 function () {
+    get_para();
+    $("#district"+filter_para["district"]).attr("class","selected");    
+    $("#measure_means"+filter_para["measure_means"]).attr("class","selected");
+    $(".pagination a").each(function () {
+//        console.log($(this).attr("href"));
+        if (filter_para["district"] && $(this).attr("href")) {
+            $(this).attr("href",$(this).attr("href")+"&district="+filter_para["district"]);
+        }
+        if (filter_para["measure_means"] && $(this).attr("href")) {
+            $(this).attr("href",$(this).attr("href")+"&measure_means="+filter_para["measure_means"]);
+        }
+    });
+});
+function get_para() {
     var str = window.location.href;
     if (str.charAt(str.length-1) == '\?') {
         str = str.substr(0,str.length-1);
@@ -16,10 +30,7 @@ function () {
             filter_para[pars[0]] = pars[1];
         })
     }
-    $("#district"+filter_para["district"]).attr("class","selected");    
-    $("#measure_means"+filter_para["measure_means"]).attr("class","selected");
-};
-
+}
 
 function deleteStation(id){
     layer.confirm(
@@ -49,8 +60,6 @@ function deleteStation(id){
       );
 }
 function setFilter(par,par_val){
-    $(this).attr("class","selected");
-    $("span").not(this).attr("class","unselected");
     var str = window.location.href;
     if (str.charAt(str.length-1) == '\?') {
         str = str.substr(0,str.length-1);
@@ -67,6 +76,7 @@ function setFilter(par,par_val){
     else {
         parent_link = str;
     }
+    delete filter_para["page"];
     if (par_val=="all") {
         delete filter_para[par];
     }

@@ -241,7 +241,7 @@ class StationIndexView(generic.ListView):
     model = station
     context_object_name = 'station_list'
     template_name = 'manager/stationIndex.html'
-    paginate_by = 20
+    paginate_by = 2
     ordering = ['district','name_cn']
     district = 0
     mean = 0
