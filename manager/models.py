@@ -28,7 +28,12 @@ class measure_means(models.Model):
 
     def __str__(self):
         return self.means
+
+class image(models.Model):
+    belong_to = models.ForeignKey('station', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to = 'station_img/')
     
+
 class station(models.Model):
     PROCECT_CHOICE = (
         ('十五','十五'),('十一五','十一五'),('十二五','十二五'),('背景场','背景场'),('十三五','十三五'),('九五','九五'),
@@ -51,7 +56,6 @@ class station(models.Model):
     address = models.CharField(max_length=256,default='',null=True,blank=True)
     staff_name = models.CharField(max_length=32,default='',null=True,blank=True)
     phone = models.CharField(max_length=32,default='',null=True,blank=True)
-    image = models.ImageField(upload_to = 'station_img/',null=True,default='',blank=True)
     note = models.TextField(max_length=256,null=True,blank=True)
 
     class Meta:
@@ -103,10 +107,11 @@ class equipment(models.Model):
         return self.equip_type.model + '_' +self.serial_num
 
 class station_maintain_record(models.Model):
-#    station = models.ForeignKey('station',on_delete=models.CASCADE)
+    station = models.ForeignKey('station',on_delete=models.CASCADE,verbose_name='台站')
     district = models.CharField(max_length=32,choices=DISTRICT_CHOICE,default='烟台',verbose_name='地区')
-    station = models.CharField(max_length=64,verbose_name='台站')
-    equip = models.CharField(max_length=32,null=True,blank=True,verbose_name='设备')
+#    station = models.CharField(max_length=64,verbose_name='台站')
+    #equip = models.CharField(max_length=32,null=True,blank=True,verbose_name='设备')
+    equip = models.ForeignKey('equipment',on_delete=models.CASCADE,null=True,blank=True,verbose_name='设备')
     intro = models.CharField(max_length=64,null=True,blank=True,verbose_name='故障描述')
     report_date = models.DateTimeField(null=True,blank=True,verbose_name='报修时间')
     reporter = models.CharField(max_length=64,null=True,blank=True,verbose_name='报修人或发现人')

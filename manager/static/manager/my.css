@@ -13,6 +13,15 @@ header {
 	float: right;
 	display: inline;
 }
+
+.loginDiv {
+   margin-top: 100px;
+   margin-bottom: 100px;
+}
+.loginButton {
+    margin-top: 20px;
+    font-size: large;
+}
 nav {
 	width:120px;
 	height: 100%;

@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm,ClearableFileInput
 from .models import *
 class DeleveryDetailForm(ModelForm):
     class Meta:
@@ -14,3 +14,6 @@ class StationDetailForm(ModelForm):
     class Meta:
         model = station
         fields = '__all__'
+        widgets = {
+                "image": ClearableFileInput(attrs={'multiple': True}),
+            }
