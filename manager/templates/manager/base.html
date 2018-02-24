@@ -7,16 +7,24 @@
     <title>manager</title>
     {% endblock %}
     <link rel="stylesheet" type="text/css" href="{% static 'manager/my.css' %}" />
-    <link rel="stylesheet" href="{% static 'manager/layui/css/layui.css' %}" />
+<!--    <link rel="stylesheet" href="{% static 'manager/layui/css/layui.css' %}" />-->
+        <script type="text/javascript" src="{% static 'manager/jquery-3.3.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'manager/layer/layer.js' %}"></script>
+<!--    <script type="text/javascript" src="{% static 'manager/layui/layui.js' %}"></script>-->
+    
+    
 </head>
 <body>
 <header>
 <div id="slogen">我们不维修仪器，我们只是仪器的搬运工。</div>
+
+<div id="loginMenu">
 {% if user.is_authenticated %}
-<div id="loginMenu"><a href="{% url 'manager:logout' %}">Log Out</a></div>
+<a href="{% url 'manager:logout' %}">Log Out</a>
 {% else %}
-<div id="loginMenu"><a href="{% url 'manager:login' %}">Log In</a></div>
+<a href="{% url 'manager:login' %}">Log In</a>
 {% endif %}
+</div>
 
 </header>
 {% block body %}
@@ -30,7 +38,7 @@
         <label class="level1menu">设备</label>
         <ol class="level2folder">
              <li class="level2menu"><a href="{% url 'manager:deviceIndex' %}">查询</a></li>
-             <li class="level2menu"><a href="{% url 'manager:newDeviceRecord' %}">新建</a></li>
+             <li class="level2menu"><a href="javascript:;" onclick="newRecord('deviceIndex')">新建</a></li>
         </ol>
 
     </li>
@@ -38,7 +46,7 @@
         <label class="level1menu">邮寄</label>
         <ol class="level2folder">
              <li class="level2menu"><a href="{% url 'manager:deleveryIndex' %}">查询</a></li>
-             <li class="level2menu"><a href="{% url 'manager:newDeleveryRecord' %}">新建</a></li>
+             <li class="level2menu"><a href="javascript:;" onclick="newRecord('deleveryIndex')">新建</a></li>
         </ol>
 
     </li>
@@ -46,9 +54,30 @@
         <label class="level1menu" >台站</label>
         <ol class="level2folder">
             <li class="level2menu"><a href="{% url 'manager:stationIndex' %}">查询</a></li>
-            <li class="level2menu"><a href="{% url 'manager:newStationRecord' %}">新建</a></li>
+            <li class="level2menu"><a href="javascript:;" onclick="newRecord('stationIndex')">新建</a></li>
         </ol>
     </li>
+    <li >
+        <label class="level1menu" >设备使用情况</label>
+        <ol class="level2folder">
+            <li class="level2menu"><a href="{% url 'manager:equipStatusIndex' %}">查询</a></li>
+            <li class="level2menu"><a href="javascript:;" onclick="newRecord('equipStatusIndex')">新建</a></li>
+        </ol>
+    </li>
+    <li >
+        <label class="level1menu" >设备维修情况</label>
+        <ol class="level2folder">
+            <li class="level2menu"><a href="{% url 'manager:equipMaintainIndex' %}">查询</a></li>
+            <li class="level2menu"><a href="javascript:;" onclick="newRecord('equipMaintainIndex')">新建</a></li>
+        </ol>
+    </li>
+
+
+
+
+
+
+
 
 </nav>
 {% endif %}
@@ -60,9 +89,6 @@
 <footer>
 footer.
 </footer>
-    <script type="text/javascript" src="{% static 'manager/jquery-3.3.1.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'manager/layer/layer.js' %}"></script>
-    <script type="text/javascript" src="{% static 'manager/layui/layui.js' %}"></script>
-    <script type="text/javascript" src="{% static 'manager/my.js' %}"></script>
+<script type="text/javascript" src="{% static 'manager/my.js' %}"></script>
 </body>
 </html> 

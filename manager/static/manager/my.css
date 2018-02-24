@@ -3,15 +3,24 @@ body {
 	background-color: #EEFFFF;
 	}
 header {
+    display: inline;
+    width: 100%;
+    height:30px;
+    position:fixed;
+    top:0;
+    z-index:1;
+    opacity:1;
+    color: #ffc;
+    background: #79aec8;
 }
 #slogen {
 	text-align: center;
-	display: inline;
+	float: left;
 	}
 #loginMenu {
 	background-color: #79DFCD;
 	float: right;
-	display: inline;
+	padding-right: 20px;
 }
 
 .loginDiv {
@@ -22,15 +31,16 @@ header {
     margin-top: 20px;
     font-size: large;
 }
-nav {
+nav {top:20%;
 	width:120px;
 	height: 100%;
-	margin: 20px;
 	margin-left: 0;
-	padding: 0px;
+	
 	background-color:#f2f2f2;
 	overflow: hidden;
 	float: left;
+	position:fixed;
+	overflow-y: scroll;
 	}
 /*所有菜单项设置统一样式*/
 .tree li {
@@ -85,10 +95,14 @@ nav {
 
 
 section {
+    margin-left: 200px;
     float:left;
     padding:10px;
     min-height:600px;
     width: 70%;
+    overflow: auto;
+    padding-top: 30px;
+    
 }
 
 .main {
@@ -99,7 +113,7 @@ section {
 .districtFilter , .meanFilter {
     display: flex;
     text-align: center;
-    
+
 }
 .filterName {
     text-align: center;
@@ -113,11 +127,6 @@ section {
     border: 1px;
 }
 
-.unselected {
-    background-color: ;
-    border: ;
-
-}
 footer {
     clear:both;
     text-align:center;

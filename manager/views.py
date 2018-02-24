@@ -5,9 +5,11 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect,HttpResponse
 from django.urls import reverse
+from django.db.models import Q
 from .models import *
 from .forms import *
 # Create your views here.
+
 
 def homeView(request):
     if not request.user.is_authenticated:
@@ -155,6 +157,30 @@ class DeviceIndexView(generic.ListView):
     template_name = 'manager/deviceIndex.html'
     paginate_by = 20
     ordering = 'id'
+    district = 0
+    mean = 0
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['districts'] = district.objects.all()
+        context['measure_means'] = measure_means.objects.all()
+        return context
+    
+    def get_queryset(self):
+        filter_dict = self.request.GET.dict()
+        print('filter:'+str(filter_dict))
+        if 'csrfmiddlewaretoken' in filter_dict.keys():
+            filter_dict.pop('csrfmiddlewaretoken')
+        if 'page' in filter_dict.keys():
+            filter_dict.pop('page')
+        if 'search_word' in filter_dict.keys():
+            search_word = filter_dict['search_word']
+            filter_dict.pop('search_word')
+            queryset = self.model.objects.filter(**filter_dict).filter(Q(name_cn__icontains=search_word))
+        else:
+            queryset = self.model.objects.filter(**filter_dict)
+        return queryset    
+
 
 @login_required(login_url=('/manager/login'))
 def newDeviceRecord(request):
@@ -163,11 +189,11 @@ def newDeviceRecord(request):
         form = DeviceDetailForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('manager:deviceIndex'))
+            return HttpResponse('1')
         else:
-            return HttpResponse('error')
+            return HttpResponse('2')
     else:
-        return render(request,'manager/detail.html', {'form':form})
+        return render(request,'manager/newRecord.html', {'form':form,'par':'deviceIndex'})
 
 @login_required(login_url=('/manager/login'))
 def deviceDetailView(request, pk):
@@ -175,32 +201,65 @@ def deviceDetailView(request, pk):
     if pk and request.method=='GET':
         form = DeviceDetailForm(instance=record)
     elif request.method=='POST':
-        form = DeviceDetailForm(request.POST, instance=record)
+        form = DeviceDetailForm(request.POST, request.FILES, instance=record)
+        print(request.FILES)
         if form.is_valid():
+            files = request.FILES.getlist('image')
+            for f in files:
+                fw = open(f.name,'wb+')
+                for chunk in f.chunks():
+                    fw.write(chunk)
+                fw.close()
             form.save()
-            return redirect(reverse('manager:deviceIndex'))
+            #return redirect(reverse('manager:stationIndex'))
+            return HttpResponse("1")
+        else:
+            return HttpResponse("2")
     else:
         form = DeviceDetailForm()
-    print(form)
-    return render(request, 'manager/detail.html', {'form':form})
+    print(pk)
+    return render(request, 'manager/detail.html', {'form':form, 'pk':pk})
 
 
 
 @login_required(login_url=('/manager/login'))
 def deleteDeviceView(request, pk):
-    equipment.objects.get(pk=pk).delete()
-    return redirect(reverse('manager:deviceIndex'))
+    if equipment.objects.get(pk=pk).delete():
+        return HttpResponse("1")
+    else:
+        return HttpResponse("2")
 
 
 @method_decorator(login_required(login_url=('/manager/login')), name='dispatch')
 class DeleveryIndexView(generic.ListView):
-    #context = equip_delivery_record.objects.all()
-    #return render(request, 'manager/index.html', {"context":context})
     model = equip_delivery_record
     context_object_name = 'delevery_list'
     template_name = 'manager/deleveryIndex.html'
     paginate_by = 20
     ordering = '-send_date'
+    district = 0
+    mean = 0
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['districts'] = district.objects.all()
+        context['measure_means'] = measure_means.objects.all()
+        return context
+    
+    def get_queryset(self):
+        filter_dict = self.request.GET.dict()
+        print('filter:'+str(filter_dict))
+        if 'csrfmiddlewaretoken' in filter_dict.keys():
+            filter_dict.pop('csrfmiddlewaretoken')
+        if 'page' in filter_dict.keys():
+            filter_dict.pop('page')
+        if 'search_word' in filter_dict.keys():
+            search_word = filter_dict['search_word']
+            filter_dict.pop('search_word')
+            queryset = self.model.objects.filter(**filter_dict).filter(Q(receiver_unit__icontains=search_word))
+        else:
+            queryset = self.model.objects.filter(**filter_dict)
+        return queryset    
 
 @login_required(login_url=('/manager/login'))
 def newDeleveryRecord(request):
@@ -209,39 +268,51 @@ def newDeleveryRecord(request):
         form = DeleveryDetailForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('manager:deleveryIndex'))
+            return HttpResponse('1')
         else:
-            return HttpResponse('error')
+            return HttpResponse('2')
     else:
-        return render(request,'manager/detail.html', {'form':form})
+        return render(request,'manager/newRecord.html', {'form':form,'par':'deleveryIndex'})
 
 @login_required(login_url=('/manager/login'))
 def deleveryDetailView(request, pk):
-    record = get_object_or_404(equip_delivery_record,pk=pk)    
+    record = get_object_or_404(equip_delivery_record,pk=pk)
     if pk and request.method=='GET':
         form = DeleveryDetailForm(instance=record)
     elif request.method=='POST':
-        form = DeleveryDetailForm(request.POST, instance=record)
+        form = DeleveryDetailForm(request.POST, request.FILES, instance=record)
+        print(request.FILES)
         if form.is_valid():
+            files = request.FILES.getlist('image')
+            for f in files:
+                fw = open(f.name,'wb+')
+                for chunk in f.chunks():
+                    fw.write(chunk)
+                fw.close()
             form.save()
-            return redirect(reverse('manager:deleveryIndex'))
+            #return redirect(reverse('manager:stationIndex'))
+            return HttpResponse("1")
+        else:
+            return HttpResponse("2")
     else:
         form = DeleveryDetailForm()
-    print(form)
-    return render(request, 'manager/detail.html', {'form':form})
+    print(pk)
+    return render(request, 'manager/detail.html', {'form':form, 'pk':pk})
 
 
 @login_required(login_url=('/manager/login'))
 def deleteDeleveryView(request, pk):
-    equip_delivery_record.objects.get(pk=pk).delete()
-    return redirect(reverse('manager:deleveryIndex'))
+    if equip_delivery_record.objects.get(pk=pk).delete():
+        return HttpResponse("1")
+    else:
+        return HttpResponse("2")
 
 @method_decorator(login_required(login_url=('/manager/login')), name='dispatch')
 class StationIndexView(generic.ListView):
     model = station
     context_object_name = 'station_list'
     template_name = 'manager/stationIndex.html'
-    paginate_by = 2
+    paginate_by = 20
     ordering = ['district','name_cn']
     district = 0
     mean = 0
@@ -254,10 +325,17 @@ class StationIndexView(generic.ListView):
     
     def get_queryset(self):
         filter_dict = self.request.GET.dict()
-        print(filter_dict)
+        print('filter:'+str(filter_dict))
+        if 'csrfmiddlewaretoken' in filter_dict.keys():
+            filter_dict.pop('csrfmiddlewaretoken')
         if 'page' in filter_dict.keys():
             filter_dict.pop('page')
-        queryset = station.objects.filter(**filter_dict)
+        if 'search_word' in filter_dict.keys():
+            search_word = filter_dict['search_word']
+            filter_dict.pop('search_word')
+            queryset = self.model.objects.filter(**filter_dict).filter(Q(name_cn__icontains=search_word))
+        else:
+            queryset = self.model.objects.filter(**filter_dict)
         return queryset
 
 @login_required(login_url=('/manager/login'))
@@ -267,11 +345,11 @@ def newStationRecord(request):
         form = StationDetailForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('manager:stationIndex'))
+            return HttpResponse('1')
         else:
-            return HttpResponse('error')
+            return HttpResponse('2')
     else:
-        return render(request,'manager/detail.html', {'form':form})
+        return render(request,'manager/newRecord.html', {'form':form,'par':'stationIndex'})
 
 @login_required(login_url=('/manager/login'))
 def stationDetailView(request, pk):
@@ -289,14 +367,166 @@ def stationDetailView(request, pk):
                     fw.write(chunk)
                 fw.close()
             form.save()
-            return redirect(reverse('manager:stationIndex'))
+            #return redirect(reverse('manager:stationIndex'))
+            return HttpResponse("1")
+        else:
+            return HttpResponse("2")
     else:
         form = StationDetailForm()
-    return render(request, 'manager/detail.html', {'form':form})
+    return render(request, 'manager/detail.html', {'form':form, 'pk':pk})
 
 @login_required(login_url=('/manager/login'))
 def deleteStationView(request, pk):
     if station.objects.get(pk=pk).delete():
+        return HttpResponse('1')
+    else:
+        return HttpResponse('2')
+
+class EquipStatusIndexView(generic.ListView):
+    model = equip_status
+    context_object_name = 'equip_status_list'
+    template_name = 'manager/equipStatusIndex.html'
+    paginate_by = 20
+    ordering = ['station','equipment']
+    district = 0
+    mean = 0
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['districts'] = district.objects.all()
+        context['measure_means'] = measure_means.objects.all()
+        return context
+    
+    def get_queryset(self):
+        filter_dict = self.request.GET.dict()
+        print('filter:'+str(filter_dict))
+        if 'csrfmiddlewaretoken' in filter_dict.keys():
+            filter_dict.pop('csrfmiddlewaretoken')
+        if 'page' in filter_dict.keys():
+            filter_dict.pop('page')
+        if 'search_word' in filter_dict.keys():
+            search_word = filter_dict['search_word']
+            filter_dict.pop('search_word')
+            queryset = self.model.objects.filter(**filter_dict).filter(Q(equip_status__icontains=search_word))
+        else:
+            queryset = self.model.objects.filter(**filter_dict)
+        return queryset
+
+@login_required(login_url=('/manager/login'))
+def neweEquipStatusRecord(request):
+    form = EquipStatusForm()
+    if request.method == 'POST':
+        form = EquipStatusForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('1')
+        else:
+            return HttpResponse('2')
+    else:
+        return render(request,'manager/newRecord.html', {'form':form,'par':'equipStatusIndex'})
+
+@login_required(login_url=('/manager/login'))
+def equipStatusDetailView(request, pk):
+    record = get_object_or_404(equip_status,pk=pk)    
+    if pk and request.method=='GET':
+        form = EquipStatusForm(instance=record)
+    elif request.method=='POST':
+        form = EquipStatusForm(request.POST, request.FILES, instance=record)
+        print(request.FILES)
+        if form.is_valid():
+            files = request.FILES.getlist('image')
+            for f in files:
+                fw = open(f.name,'wb+')
+                for chunk in f.chunks():
+                    fw.write(chunk)
+                fw.close()
+            form.save()
+            #return redirect(reverse('manager:stationIndex'))
+            return HttpResponse("1")
+        else:
+            return HttpResponse("2")
+    else:
+        form = EquipStatusForm()
+    return render(request, 'manager/detail.html', {'form':form, 'pk':pk})
+
+@login_required(login_url=('/manager/login'))
+def deleteEquipStatusView(request, pk):
+    if equip_status.objects.get(pk=pk).delete():
+        return HttpResponse('1')
+    else:
+        return HttpResponse('2')
+
+
+class EquipMaintainIndexView(generic.ListView):
+    model = equip_maintain_record
+    context_object_name = 'equip_maintain_list'
+    template_name = 'manager/equipMaintainIndex.html'
+    paginate_by = 20
+    ordering = ['station','equipment']
+    district = 0
+    mean = 0
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['districts'] = district.objects.all()
+        context['measure_means'] = measure_means.objects.all()
+        return context
+    
+    def get_queryset(self):
+        filter_dict = self.request.GET.dict()
+        print('filter:'+str(filter_dict))
+        if 'csrfmiddlewaretoken' in filter_dict.keys():
+            filter_dict.pop('csrfmiddlewaretoken')
+        if 'page' in filter_dict.keys():
+            filter_dict.pop('page')
+        if 'search_word' in filter_dict.keys():
+            search_word = filter_dict['search_word']
+            filter_dict.pop('search_word')
+            queryset = self.model.objects.filter(**filter_dict).filter(Q(equip_maintain_record__icontains=search_word))
+        else:
+            queryset = self.model.objects.filter(**filter_dict)
+        return queryset
+
+@login_required(login_url=('/manager/login'))
+def neweEquipMaintainRecord(request):
+    form = EquipMaintainForm()
+    if request.method == 'POST':
+        form = EquipMaintainForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('1')
+        else:
+            return HttpResponse('2')
+    else:
+        return render(request,'manager/newRecord.html', {'form':form,'par':'equipMaintainIndex'})
+
+@login_required(login_url=('/manager/login'))
+def equipMaintainDetailView(request, pk):
+    record = get_object_or_404(equip_maintain_record,pk=pk)    
+    if pk and request.method=='GET':
+        form = EquipMaintainForm(instance=record)
+    elif request.method=='POST':
+        form = EquipMaintainForm(request.POST, request.FILES, instance=record)
+        print(request.FILES)
+        if form.is_valid():
+            files = request.FILES.getlist('image')
+            for f in files:
+                fw = open(f.name,'wb+')
+                for chunk in f.chunks():
+                    fw.write(chunk)
+                fw.close()
+            form.save()
+            #return redirect(reverse('manager:stationIndex'))
+            return HttpResponse("1")
+        else:
+            return HttpResponse("2")
+    else:
+        form = EquipMaintainForm()
+    return render(request, 'manager/detail.html', {'form':form, 'pk':pk})
+
+@login_required(login_url=('/manager/login'))
+def deleteEquipMaintainView(request, pk):
+    if equip_maintain_record.objects.get(pk=pk).delete():
         return HttpResponse('1')
     else:
         return HttpResponse('2')

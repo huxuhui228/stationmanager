@@ -17,3 +17,13 @@ class StationDetailForm(ModelForm):
         widgets = {
                 "image": ClearableFileInput(attrs={'multiple': True}),
             }
+
+class EquipStatusForm(ModelForm):
+    class Meta:
+        model = equip_status
+        fields = '__all__'
+
+class EquipMaintainForm(ModelForm):
+    class Meta:
+        model = equip_maintain_record
+        fields = '__all__'

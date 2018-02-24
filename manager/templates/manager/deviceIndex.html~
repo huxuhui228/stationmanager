@@ -5,16 +5,16 @@
 {% include './searchField.html' %}
 <table>
     <tr>
-    <th>序号</th><th>id</th><th>型号</th><th>序列号</th><th>备注</th>
+    <th>序号</th><th>型号</th><th>序列号</th><th>备注</th>
     </tr>
     {% for device in device_list %}
     <tr>
     <td>{{ forloop.counter }}</td>
-    <td><a href="{{ device.id }}">{{ device.id }}</a></td>
     <td>{{ device.serial_num }}</td>
     <td>{{ device.equip_type }}</td>
     <td>{{ device.note }}</td>
-    <td><a href="{{ device.id }}/delete" >delete</a></td>
+    <td><button onclick="edit({{ device.id }})">edit</button>
+    <button onclick="deleteUnit({{ device.id }})" >delete</button></td>
     </tr>
     {% endfor %}
 </table>

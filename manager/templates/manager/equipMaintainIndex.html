@@ -5,24 +5,24 @@
 {% include './searchField.html' %}
 </div>
 <div id="dataTable">
-<table lay-filter="stationIndexTable">
+<table lay-filter="equipMaintainIndexTable">
     <thead>
         <tr>
             <th lay-data="{field:'number', width:80, sort: true}">序号</th>
-            <th lay-data="{field:'name', width:200, sort: true}">名称</th>
-            <th lay-data="{field:'sierialNum', width:80, sort: true}">编号</th>
-            <th lay-data="{field:'measure_means', width:80, sort: true}">手段</th>
-            <th lay-data="{field:'district', width:80, sort: true}">市域</th>
+            <th lay-data="{field:'name', width:200, sort: true}">台站</th>
+            <th lay-data="{field:'sierialNum', width:80, sort: true}">设备</th>
+            <th lay-data="{field:'measure_means', width:80, sort: true}">故障</th>
+            <th lay-data="{field:'district', width:80, sort: true}">维修人</th>
             <th lay-data="{field:'note', width:200, sort: true}"></th>
         </tr>
     </thead>
-    {% for record in station_list %}
+    {% for record in equip_maintain_list %}
     <tr>
     <td>{{ forloop.counter }}</td>
-    <td>{{ record.name_cn }}</td>
-    <td>{{ record.code }}</td>
-    <td>{{ record.measure_means }}</td>
-    <td>{{ record.district }}</td>
+    <td>{{ record.station }}</td>
+    <td>{{ record.equip }}</td>
+    <td>{{ record.intro }}</td>
+    <td>{{ record.staff }}</td>
     <td><button onclick="edit({{ record.id }})">edit</button>
     <button onclick="deleteUnit({{ record.id }})" >delete</button></td>
     </tr>

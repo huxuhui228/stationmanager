@@ -5,17 +5,18 @@
 {% include './searchField.html' %}
 <table>
     <tr>
-    <th>序号</th><th>id</th><th>型号</th><th>接收单位</th><th>接收人</th><th>寄出日期</th><th>返回状态</th>
+    <th>序号</th><th>型号</th><th>接收单位</th><th>接收人</th><th>寄出日期</th><th>返回状态</th>
     </tr>
     {% for delevery in delevery_list %}
     <tr>
     <td>{{ forloop.counter }}</td>
-    <td><a href="{{ delevery.id }}">{{ delevery.id }}</a></td>
     <td>{{ delevery.send_equip_type }}</td>
     <td>{{ delevery.receiver_unit }}</td>
     <td>{{ delevery.receiver }}</td>
     <td>{{ delevery.send_date }}</td>
     <td>{{ delevery.back_status }}</td>
+    <td><button onclick="edit({{ delevery.id }})">edit</button>
+    <button onclick="deleteUnit({{ delevery.id }})" >delete</button></td>
     </tr>
     {% endfor %}
 </table>

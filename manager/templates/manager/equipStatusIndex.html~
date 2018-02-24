@@ -1,5 +1,11 @@
-
-<table lay-filter="stationIndexTable">
+{% extends './base.html' %}
+<div>
+{% block main %}
+<div id="search_field">
+{% include './searchField.html' %}
+</div>
+<div id="dataTable">
+<table lay-filter="equipStatusIndexTable">
     <thead>
         <tr>
             <th lay-data="{field:'number', width:80, sort: true}">序号</th>
@@ -10,18 +16,21 @@
             <th lay-data="{field:'note', width:200, sort: true}"></th>
         </tr>
     </thead>
-    {% for station in station_list %}
+    {% for record in equip_status_list %}
     <tr>
     <td>{{ forloop.counter }}</td>
-    <td>{{ station.name_cn }}</td>
-    <td>{{ station.code }}</td>
-    <td>{{ station.measure_means }}</td>
-    <td>{{ station.district }}</td>
-<!--    <td><a href="{% url 'manager:stationDetail' station.id %}" ><button>edit</button></a>-->
-    <td><button onclick="edit({{ station.id }})">edit</button>
-    <button onclick="deleteUnit({{ station.id }})" >delete</button></td>
+    <td>{{ record.station }}</td>
+    <td>{{ record.equipment }}</td>
+    <td>{{ record.ip_address }}</td>
+    <td>{{ record.install_date }}</td>
+    <td><button onclick="edit({{ record.id }})">edit</button>
+    <button onclick="deleteUnit({{ record.id }})" >delete</button></td>
     </tr>
     {% endfor %}
 </table>
 {% include './paginator.html' %}
 <a href="javascript:history.go(-1);">返回上一页</a>
+</div>
+
+{% endblock %}
+</div>

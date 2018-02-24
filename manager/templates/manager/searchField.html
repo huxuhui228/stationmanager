@@ -1,5 +1,4 @@
 
-
  <div class="districtFilter">
  <span class="filterName">市域:</span>
   <a href="javascript:;"><span class="unselected" onclick="setFilter('district','all')">All</span></a>
@@ -20,7 +19,10 @@
 <a href="" >已返回</a>
 <a href="" >无需返回</a>
  </div>
-<form id="search_form">
-    <input type="text" />
-    <button type="submit">搜索</button>
+
+<form method="get" action="">
+  {% csrf_token %}
+  <input type="search" id="search_word" placeholder="搜索" name="search_word" required>
+  <button type="submit" onclick="setFilter('search_word',document.getElementById("search_word").val())">搜索</button>
+  <button type="submit" onclick="setFilter('search_word','all')">清空</button>
 </form>

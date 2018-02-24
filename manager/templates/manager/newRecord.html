@@ -1,0 +1,8 @@
+<form class="newRecord" method="POST"  enctype="multipart/form-data" onsubmit="return false;">
+{% csrf_token %}
+<p id="par">{{ par }}</p>
+{{ form.as_p }}
+<center>
+<button onclick="saveNew()">提交</button>
+</center>
+</form>

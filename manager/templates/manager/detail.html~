@@ -1,15 +1,12 @@
-{% extends './base.html'%}
-{% block titlle %}delevery list{% endblock %}
-{% block main %}
-<form class="detail"  method="POST"  enctype="multipart/form-data">
+
+<form class="detail" action="{{ pk }}" method="POST"  enctype="multipart/form-data" onsubmit="return false;">
 {% csrf_token %}
 {{ form.as_p }}
-<input class="submitButton" type="submit" value="Submit" />
+<center>
+{% if {{ pk }} %}
+    <button onclick="saveEdit({{ pk }})">提交</button>
+{% else %}
+    <button onclick="saveNew()">提交</button>
+{% endif %}
+</center>
 </form>
-<a href="javascript:history.go(-1);">返回上一页</a>
-{% endblock %}
-<script type="text/javascript" >
-$(function () {
-	$("#id_image").attr("multiple",True);
-})
-</script>
