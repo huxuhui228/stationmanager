@@ -9,6 +9,50 @@ from django.db.models import Q
 from .models import *
 from .forms import *
 # Create your views here.
+PROCECT_CHOICE = (
+    ('十五','十五'),('十一五','十一五'),('十二五','十二五'),('背景场','背景场'),('十三五','十三五'),('九五','九五'),
+    )
+DISTRICT_CHOICE = (
+    ('济南','济南'),('泰安','泰安'),('潍坊','潍坊'),('德州','德州'),
+    ('滨州','滨州'),('莱芜','莱芜'),('青岛','青岛'),('烟台','烟台'),
+    ('日照','日照'),('东营','东营'),('济宁','济宁'),('菏泽','菏泽'),
+    ('聊城','聊城'),('临沂','临沂'),('枣庄','枣庄'),('淄博','淄博'),
+    ('威海','威海'),('省局','省局'),
+    )
+MEASURE_MEANS_CHOICE = (
+    ('测震','测震'),('强震','强震'),
+    ('前兆','前兆')
+    )
+SENDER_CHOICES = (
+    ('胡旭辉','胡旭辉'),('李小晗','李小晗'),('王杰民','王杰民'),('曲利','曲利'),
+    ('冯志军','冯志军'),('马丕峰','马丕峰'),('王忠民','王忠民'),('吴双','吴双')
+    )
+BACK_STATUS = (
+    ('未返回','未返回'),('已返回','已返回'),('部分返回','部分返回'),('无需返回','无需返回')
+    )
+STATUS_CHOICE = (
+    ('1','台上正常使用'),
+    ('2','在库'),
+    ('3','在修'),
+    )
+SAMPLING_RATE_CHOICE = (
+    ('100sps','每秒100点'),
+    ('200sps','每秒200点'),
+    ('50sps','每秒50点'),
+    ('1spm','每分1点'),
+    ('1sph','每小时1点')
+    )
+TRANSMISSION_TYPE_CHOICE = (
+    ('SDH','SDH'),
+    ('3G','3G'),
+    ('Internet_VPN','Internet_VPN'),
+    ('电台','电台')
+    )
+SCHEDULE_status_CHOICE = (
+    ('1','未完成'),
+    ('2','已完成'),
+    ('3','已放弃'),
+    )
 
 
 def homeView(request):
@@ -319,7 +363,9 @@ class StationIndexView(generic.ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        #context['districts'] = dict(DISTRICT_CHOICE)
         context['districts'] = district.objects.all()
+        #context['measure_means'] = dict(MEASURE_MEANS_CHOICE)
         context['measure_means'] = measure_means.objects.all()
         return context
     
@@ -382,6 +428,7 @@ def deleteStationView(request, pk):
     else:
         return HttpResponse('2')
 
+@method_decorator(login_required(login_url=('/manager/login')), name='dispatch')
 class EquipStatusIndexView(generic.ListView):
     model = equip_status
     context_object_name = 'equip_status_list'
@@ -457,6 +504,8 @@ def deleteEquipStatusView(request, pk):
         return HttpResponse('2')
 
 
+
+@method_decorator(login_required(login_url=('/manager/login')), name='dispatch')
 class EquipMaintainIndexView(generic.ListView):
     model = equip_maintain_record
     context_object_name = 'equip_maintain_list'
@@ -488,7 +537,7 @@ class EquipMaintainIndexView(generic.ListView):
         return queryset
 
 @login_required(login_url=('/manager/login'))
-def neweEquipMaintainRecord(request):
+def newEquipMaintainRecord(request):
     form = EquipMaintainForm()
     if request.method == 'POST':
         form = EquipMaintainForm(request.POST)

@@ -16,9 +16,9 @@ header {
 #slogen {
 	text-align: center;
 	float: left;
+	margin-top: 3px;
 	}
 #loginMenu {
-	background-color: #79DFCD;
 	float: right;
 	padding-right: 20px;
 }
@@ -31,7 +31,8 @@ header {
     margin-top: 20px;
     font-size: large;
 }
-nav {top:20%;
+nav {
+    top:10%;
 	width:120px;
 	height: 100%;
 	margin-left: 0;

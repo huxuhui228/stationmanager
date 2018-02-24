@@ -20,9 +20,10 @@
 
 <div id="loginMenu">
 {% if user.is_authenticated %}
-<a href="{% url 'manager:logout' %}">Log Out</a>
+<span>Welcome {{ user }}.</span>
+<a href="{% url 'manager:logout' %}">Logout</a>
 {% else %}
-<a href="{% url 'manager:login' %}">Log In</a>
+<a href="{% url 'manager:login' %}">Login</a>
 {% endif %}
 </div>
 

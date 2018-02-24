@@ -71,16 +71,16 @@ class image(models.Model):
 class station(models.Model):
 
     code = models.CharField(max_length=32,default='',blank=True)
-    name_en = models.CharField(max_length=64,default='')
-    name_cn = models.CharField(max_length=64,default='')
-    #measure_means = models.ForeignKey('measure_means', on_delete=models.CASCADE,null=True,blank=True)
-    measure_means = models.CharField(max_length=32,choices=MEASURE_MEANS_CHOICE,
-                                     default='测震',blank=True)    
+    name_en = models.CharField(max_length=64,default='',null=True,blank=True)
+    name_cn = models.CharField(max_length=64)
+    measure_means = models.ForeignKey('measure_means', on_delete=models.CASCADE,null=True,blank=True)
+    #measure_means = models.CharField(max_length=32,choices=MEASURE_MEANS_CHOICE,
+                                     #default='测震',blank=True)    
     project_source = models.CharField(max_length=32,blank=True,
                     default='十五',choices=PROCECT_CHOICE)
 
-    district = models.CharField(max_length=32,choices=DISTRICT_CHOICE,default='济南')
-#    district = models.ForeignKey('district', on_delete=models.CASCADE,null=True,blank=True)
+    #district = models.CharField(max_length=32,choices=DISTRICT_CHOICE,default='济南')
+    district = models.ForeignKey('district', on_delete=models.CASCADE,null=True,blank=True)
     longtitude = models.FloatField(default=None,null=True,blank=True)
     latitude = models.FloatField(default=None,null=True,blank=True)
     heigh = models.FloatField(default=None,null=True,blank=True)
@@ -130,6 +130,7 @@ class equipment(models.Model):
 
     equip_type = models.ForeignKey('equip_type',on_delete=models.CASCADE) 
     serial_num = models.CharField(max_length=64,blank=True)
+    station = models.ForeignKey('station',on_delete=models.CASCADE)
     note = models.TextField(max_length=256,default='',blank=True)
 
     class Meta:
@@ -162,7 +163,7 @@ class station_maintain_record(models.Model):
 class equip_maintain_record(models.Model):
     station = models.ForeignKey('station',on_delete=models.CASCADE)
     equip = models.ForeignKey('equipment',on_delete=models.CASCADE)
-    intro = models.CharField(max_length=64,blank=True)
+    intro = models.TextField(max_length=128,blank=True)
     fault_startdate = models.DateTimeField(auto_now=True,null=True,blank=True)
     fault_enddate = models.DateTimeField(auto_now=True,null=True,blank=True)
     maintain_date = models.DateTimeField(auto_now=True,null=True,blank=True)
@@ -177,7 +178,6 @@ class equip_maintain_record(models.Model):
 
 class equip_delivery_record(models.Model):
 
-        
     send_equip_type = models.ForeignKey('equip_type',null=True,blank=True,on_delete=models.CASCADE,related_name="寄出设备类型",verbose_name="寄出设备类型")
     serial_num = models.CharField(max_length=64,blank=True,verbose_name="序列号")
     number = models.IntegerField(default=1,null=True,blank=True,verbose_name="寄出数量")
@@ -219,7 +219,7 @@ class equip_status(models.Model):
         verbose_name = '台站设备安装情况'
         verbose_name_plural = '台站设备安装情况'
     def __str__(self):
-        return self.station.name_en + ' ' + self.equipment.serial_num
+        return self.equipment.serial_num
 
 class trip(models.Model):
     start_date = models.DateField(verbose_name='开始时间')

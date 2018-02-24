@@ -7,6 +7,7 @@ header {
     width: 100%;
     height:30px;
     position:fixed;
+    top:0;
     z-index:1;
     opacity:1;
     color: #ffc;
@@ -15,6 +16,7 @@ header {
 #slogen {
 	text-align: center;
 	float: left;
+	margin-top: 3px;
 	}
 #loginMenu {
 	background-color: #79DFCD;
@@ -30,7 +32,8 @@ header {
     margin-top: 20px;
     font-size: large;
 }
-nav {top:20%;
+nav {
+    top:10%;
 	width:120px;
 	height: 100%;
 	margin-left: 0;

@@ -121,7 +121,7 @@ function edit(id) {
 	   	   layer.open({
 	   	       type: 1,
 	   	       title: "详细信息",
-	   	       area: ['800px','640px'],
+	   	       area: '800px',
 	   	       closeBtn: 1,
 	   	       shadeClose: true,
 	   	       scrollbar: false,
@@ -164,7 +164,7 @@ function newRecord(str) {
 	   	   layer.open({
 	   	       type: 1,
 	   	       title: "new "+str,
-	   	       area: ['800px','640px'],
+	   	       area: '800px',
 	   	       closeBtn: 1,
 	   	       shadeClose: true,
 	   	       scrollbar: false,
@@ -175,12 +175,13 @@ function newRecord(str) {
 }
 
 function saveNew() {
-    layer.alert('aaa');
+    layer.alert("/manager/"+$('#par').text()+"/new");
     $.ajax({
         url: "/manager/"+$('#par').text()+"/new",
         type: "post",
         data: $(".newRecord").serialize(),
         success: function (result) {
+            layer.alert(result);
             if (result=='1') {
                 layer.alert("添加成功。",
                     function () {
