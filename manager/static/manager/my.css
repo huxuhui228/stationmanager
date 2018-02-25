@@ -84,7 +84,7 @@ nav {
 	padding:0px;
 	margin:0px;
 	font-size: 18px;
-	text-align: center;
+	text-align: left;
 	}
 .tree .level2menu{
 	padding:0;
@@ -105,17 +105,24 @@ section {
     padding-top: 30px;
     
 }
-
+.floatBtn {
+    position: fixed;
+    width: 80px;
+    top: 90px;
+    right: 50px;
+    background: #CCFFFF;
+    text-align: center;
+}
 .main {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
 }
-.districtFilter , .meanFilter {
+#search_field {
     display: flex;
-    text-align: center;
-
+    text-align: left;
 }
+
 .filterName {
     text-align: center;
 }

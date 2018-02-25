@@ -1,17 +1,10 @@
-
-
 $(document).ready(
 
 function () {
-/*    layui.use('table', function(){
-	var table = layui.table;
-    table.init('stationIndexTable', {
-        
-        limit:20,
-    });
-})*/
+    
     filter_para = get_para();
     filter_para = filter_para[1];
+
     if (filter_para["search_word"]) {
         $("#search_word").attr("placeholder", decodeURI(filter_para["search_word"]));
     }
@@ -20,19 +13,14 @@ function () {
     $(".pagination a").each(function () {
 //        console.log($(this).attr("href"));
         for (var key in filter_para) {
+            if (key=="page") {
+                continue;
+            }
             if (filter_para[key] && $(this).attr("href")) {
                 $(this).attr("href",$(this).attr("href")+"&"+key+"="+filter_para[key]);
             }
         }
-/*        if (filter_para["district"] && $(this).attr("href")) {
-            $(this).attr("href",$(this).attr("href")+"&district="+filter_para["district"]);
-        }
-        if (filter_para["measure_means"] && $(this).attr("href")) {
-            $(this).attr("href",$(this).attr("href")+"&measure_means="+filter_para["measure_means"]);
-        }
-        if (filter_para["search_word"] && $(this).attr("href")) {
-            $(this).attr("href",$(this).attr("href")+"&search_word="+filter_para["search_word"]);
-        }*/
+
     });
 });
 function get_para() {
@@ -56,6 +44,7 @@ function get_para() {
 }
 
 function deleteUnit(id){
+    record_num = $("#dataTable>tbody").find("tr").length;
     layer.confirm(
         '确定删除吗？', 
         { btn:['确定','取消'] }, 
@@ -63,17 +52,23 @@ function deleteUnit(id){
             $.ajax({
                 url: id+"/delete",
                 type: "Get",
-                data: {},
                 success: 
                     function(data){
                         if (data=='1'){
-                            layer.alert('删除成功。')
-                            parent.location.reload();
-                        }
+                            if (record_num == 1) {
+                                    filter_para = get_para();
+                                    parent_link = filter_para[0];
+                                    filter_para = filter_para[1];
+                                    filter_para["page"] = Number(filter_para["page"])-1;
+                                    window.location.href = getNewLink(parent_link,filter_para);
+                                }
+                            else {
+                                parent.location.reload();
+                                }}
                         else{
                             layer.alert('删除失败。')
-                        }
-                    },
+                            }
+                        },
                 })
         },
         
@@ -93,15 +88,8 @@ function setFilter(par,par_val){
     else {
         filter_para[par] = par_val;
     }
-    new_link = "";
-    for (var key in filter_para) {
-//        console.log(key+"======"+filter_para[key]);
-        new_link += "&"+key+"="+filter_para[key];
-    }
-    if (new_link.length>0) {
-        new_link = "?"+new_link.substr(1,new_link.length);
-    }
-    window.location.href = parent_link+new_link;
+    new_link = getNewLink(parent_link,filter_para);
+    window.location.href = new_link;
 /*    $.ajax({
         url: parent_link+"?"+new_link.substr(1,new_link.length),
         type:"GET",
@@ -111,6 +99,18 @@ function setFilter(par,par_val){
         
         }
     })*/
+}
+function getNewLink(parent_link,filter_para) {
+    new_link = "";
+    for (var key in filter_para) {
+//        console.log(key+"======"+filter_para[key]);
+        new_link += "&"+key+"="+filter_para[key];
+    }
+    if (new_link.length>0) {
+        new_link = "?"+new_link.substr(1,new_link.length);
+    }
+    new_link = parent_link+new_link;
+    return new_link;
 }
 
 function edit(id) {
@@ -175,9 +175,8 @@ function newRecord(str) {
 }
 
 function saveNew() {
-    layer.alert("/manager/"+$('#par').text()+"/new");
     $.ajax({
-        url: "/manager/"+$('#par').text()+"/new",
+        url: "/manager/"+$('#par').val()+"/new",
         type: "post",
         data: $(".newRecord").serialize(),
         success: function (result) {

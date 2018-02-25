@@ -198,7 +198,7 @@ class MyPagiantor():
 class DeviceIndexView(generic.ListView):
     model = equipment
     context_object_name = 'device_list'
-    template_name = 'manager/deviceIndex.html'
+    template_name = 'manager/indexDevice.html'
     paginate_by = 20
     ordering = 'id'
     district = 0
@@ -278,7 +278,7 @@ def deleteDeviceView(request, pk):
 class DeleveryIndexView(generic.ListView):
     model = equip_delivery_record
     context_object_name = 'delevery_list'
-    template_name = 'manager/deleveryIndex.html'
+    template_name = 'manager/indexDelevery.html'
     paginate_by = 20
     ordering = '-send_date'
     district = 0
@@ -355,7 +355,7 @@ def deleteDeleveryView(request, pk):
 class StationIndexView(generic.ListView):
     model = station
     context_object_name = 'station_list'
-    template_name = 'manager/stationIndex.html'
+    template_name = 'manager/indexStation.html'
     paginate_by = 20
     ordering = ['district','name_cn']
     district = 0
@@ -432,7 +432,7 @@ def deleteStationView(request, pk):
 class EquipStatusIndexView(generic.ListView):
     model = equip_status
     context_object_name = 'equip_status_list'
-    template_name = 'manager/equipStatusIndex.html'
+    template_name = 'manager/indexEquipStatus.html'
     paginate_by = 20
     ordering = ['station','equipment']
     district = 0
@@ -509,7 +509,7 @@ def deleteEquipStatusView(request, pk):
 class EquipMaintainIndexView(generic.ListView):
     model = equip_maintain_record
     context_object_name = 'equip_maintain_list'
-    template_name = 'manager/equipMaintainIndex.html'
+    template_name = 'manager/indexEquipMaintain.html'
     paginate_by = 20
     ordering = ['station','equipment']
     district = 0

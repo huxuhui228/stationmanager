@@ -1,6 +1,6 @@
 <form class="newRecord" method="POST"  enctype="multipart/form-data" onsubmit="return false;">
 {% csrf_token %}
-<p>{{ par }}</p>
+<input type="hidden" id="par" name="par" value="{{ par }}"> 
 {{ form.as_p }}
 <center>
 <button onclick="saveNew()">提交</button>

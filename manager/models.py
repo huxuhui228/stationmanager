@@ -66,7 +66,7 @@ class measure_means(models.Model):
 class image(models.Model):
     belong_to = models.ForeignKey('station', on_delete=models.CASCADE)
     image = models.ImageField(upload_to = 'station_img/')
-    
+    note = models.TextField(max_length=256,blank=True)
 
 class station(models.Model):
 
@@ -203,8 +203,8 @@ class equip_delivery_record(models.Model):
 
 class equip_status(models.Model):
 
-    station = models.ForeignKey(station,on_delete=models.CASCADE)
-    equipment = models.ForeignKey(equipment,on_delete=models.CASCADE)
+    station = models.ForeignKey('station',on_delete=models.CASCADE)
+    equipment = models.ForeignKey('equipment',on_delete=models.CASCADE)
     ip_address = models.GenericIPAddressField(null=True,blank=True)
     ip_mask = models.GenericIPAddressField(default='255.255.255.0',null=True,blank=True)
     ip_gateway = models.GenericIPAddressField(null=True,blank=True)

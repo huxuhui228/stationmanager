@@ -1,0 +1,7 @@
+ <div class="meanFilter">
+ <span class="filterName">手段:</span>
+  <a href="javascript:;"><span class="unselected" onclick="setFilter('measure_means','all')">All</span></a>
+  {% for mean in measure_means %}
+       <a href="javascript:;" ><span id="measure_means{{mean.id}}" class="unselected" onclick="setFilter('measure_means',{{ mean.id }})">{{ mean }}</span></a>
+  {% endfor %}
+ </div>

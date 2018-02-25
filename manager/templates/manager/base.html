@@ -17,7 +17,6 @@
 <body>
 <header>
 <div id="slogen">我们不维修仪器，我们只是仪器的搬运工。</div>
-
 <div id="loginMenu">
 {% if user.is_authenticated %}
 <span>Welcome {{ user }}.</span>
@@ -35,53 +34,32 @@
     <li>
        <label class="level1menu"><a href="{% url 'manager:home' %}">Home</a></label>
     </li>
+    <li >
+        <label class="level1menu" >台站</label>
+        <ol class="level2folder">
+            <li class="level2menu"><a href="{% url 'manager:equipStatusIndex' %}">信息</a></li>
+            <li class="level2menu"><a href="{% url 'manager:equipMaintainIndex' %}">维修信息</a></li>
+            <li class="level2menu"><a href="{% url 'manager:stationIndex' %}">台站库</a></li>
+            <li class="level2menu"></li>
+        </ol>
+    </li>
     <li>
         <label class="level1menu">设备</label>
         <ol class="level2folder">
-             <li class="level2menu"><a href="{% url 'manager:deviceIndex' %}">查询</a></li>
-             <li class="level2menu"><a href="javascript:;" onclick="newRecord('deviceIndex')">新建</a></li>
+             <li class="level2menu"><a href="{% url 'manager:deviceIndex' %}">设备库</a></li>
         </ol>
-
     </li>
     <li>
         <label class="level1menu">邮寄</label>
         <ol class="level2folder">
              <li class="level2menu"><a href="{% url 'manager:deleveryIndex' %}">查询</a></li>
-             <li class="level2menu"><a href="javascript:;" onclick="newRecord('deleveryIndex')">新建</a></li>
-        </ol>
-
-    </li>
-    <li >
-        <label class="level1menu" >台站</label>
-        <ol class="level2folder">
-            <li class="level2menu"><a href="{% url 'manager:stationIndex' %}">查询</a></li>
-            <li class="level2menu"><a href="javascript:;" onclick="newRecord('stationIndex')">新建</a></li>
         </ol>
     </li>
-    <li >
-        <label class="level1menu" >设备使用情况</label>
-        <ol class="level2folder">
-            <li class="level2menu"><a href="{% url 'manager:equipStatusIndex' %}">查询</a></li>
-            <li class="level2menu"><a href="javascript:;" onclick="newRecord('equipStatusIndex')">新建</a></li>
-        </ol>
-    </li>
-    <li >
-        <label class="level1menu" >设备维修情况</label>
-        <ol class="level2folder">
-            <li class="level2menu"><a href="{% url 'manager:equipMaintainIndex' %}">查询</a></li>
-            <li class="level2menu"><a href="javascript:;" onclick="newRecord('equipMaintainIndex')">新建</a></li>
-        </ol>
-    </li>
-
-
-
-
-
-
-
-
 </nav>
 {% endif %}
+<div class="floatBtn">
+{% block floatBtn %}{% endblock %}
+</div>
 <!-- 主体部分  -->
 <section class="main">
 {% block main %}{% endblock %}
@@ -91,5 +69,6 @@
 footer.
 </footer>
 <script type="text/javascript" src="{% static 'manager/my.js' %}"></script>
+<script type="text/javascript" >{% block js %}{% endblock %}</script>
 </body>
 </html> 

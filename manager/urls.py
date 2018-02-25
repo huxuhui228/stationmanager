@@ -13,15 +13,15 @@ urlpatterns = [
     path(r'deviceIndex/<int:pk>', views.deviceDetailView, name='deviceDetail'),
     path(r'deviceIndex/<int:pk>/delete', views.deleteDeviceView, name='deleteDevice'),
     
-    path(r'deleveryIndex/', views.DeleveryIndexView.as_view(), name='deleveryIndex'),     
+    path(r'deleveryIndex/', views.DeleveryIndexView.as_view(), name='deleveryIndex'),
     path(r'deleveryIndex/new', views.newDeleveryRecord, name='newDeleveryRecord'),
     path(r'deleveryIndex/<int:pk>', views.deleveryDetailView, name='deleveryDetail'),
     path(r'deleveryIndex/<int:pk>/delete', views.deleteDeleveryView, name='deleteDelevery'),
     
-    path(r'stationIndex/', views.StationIndexView.as_view(), name='stationIndex'),     
+    path(r'stationIndex/', views.StationIndexView.as_view(), name='stationIndex'),
     path(r'stationIndex/new', views.newStationRecord, name='newStationRecord'),
     path(r'stationIndex/<int:pk>', views.stationDetailView, name='stationDetail'),
-    path(r'stationIndex/<int:pk>/delete', views.deleteStationView, name='deleteStation'), 
+    path(r'stationIndex/<int:pk>/delete', views.deleteStationView, name='deleteStation'),
     
     path(r'equipStatusIndex/', views.EquipStatusIndexView.as_view(), name='equipStatusIndex'),     
     path(r'equipStatusIndex/new', views.neweEquipStatusRecord, name='newEquipStatusRecord'),

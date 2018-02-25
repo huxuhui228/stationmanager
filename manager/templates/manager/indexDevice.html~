@@ -1,26 +1,35 @@
 {% extends './base.html' %}
-<div>
+{% block floatBtn %}
+<a href="javascript:;" onclick="newRecord('deviceIndex')">新录入</a>
+{% endblock %}
+
 {% block main %}
+<div id="search_field">
+
+</div>
 <div>
-{% include './searchField.html' %}
-<table>
+<table id="dataTable">
+    <thead>
     <tr>
     <th>序号</th><th>型号</th><th>序列号</th><th>备注</th>
     </tr>
+    </thead>
+    <tbody>
     {% for record in device_list %}
     <tr>
     <td>{{ forloop.counter }}</td>
     <td>{{ record.serial_num }}</td>
     <td>{{ record.equip_type }}</td>
     <td>{{ record.note }}</td>
-    <td><button onclick="edit({{ record.id }})">edit</button>
+    <td><button onclick="edit({{ record.id }})">detail</button>
     <button onclick="deleteUnit({{ record.id }})" >delete</button></td>
     </tr>
     {% endfor %}
+    </tbody>
+    <tfoot></tfoot>
 </table>
 </div>
 
 {% include './paginator.html' %}
 <a href="javascript:history.go(-1);">返回上一页</a>
 {% endblock %}
-</div>

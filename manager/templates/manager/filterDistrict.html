@@ -1,0 +1,7 @@
+ <div class="districtFilter">
+ <span class="filterName">市域:</span>
+  <a href="javascript:;"><span class="unselected" onclick="setFilter('district','all')">All</span></a>
+  {% for district in districts %}
+       <a href="javascript:;"><span id="district{{district.id}}" class="unselected" onclick="setFilter('district',{{ district.id }})">{{ district }}</span></a>
+  {% endfor %}
+ </div>

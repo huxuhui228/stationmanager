@@ -1,11 +1,19 @@
 {% extends './base.html' %}
-<div>
+    {% block title %}
+    <title>station index</title>
+    {% endblock %}
+{% block floatBtn %}
+<a href="javascript:;" onclick="newRecord('stationIndex')">新录入</a>
+{% endblock %}
+
 {% block main %}
 <div id="search_field">
-{% include './searchField.html' %}
+{% include './filterDistrict.html' %}
+{% include './filterMeasureMean.html' %}
+{% include './filterKeyword.html' %}
 </div>
-<div id="dataTable">
-<table lay-filter="stationIndexTable">
+<div>
+<table id="dataTable" lay-filter="stationIndexTable">
     <thead>
         <tr>
             <th lay-data="{field:'number', width:80, sort: true}">序号</th>
@@ -16,22 +24,24 @@
             <th lay-data="{field:'note', width:200, sort: true}"></th>
         </tr>
     </thead>
-    {% for station in station_list %}
+    <tbody>
+    {% for record in station_list %}
     <tr>
     <td>{{ forloop.counter }}</td>
-    <td>{{ station.name_cn }}</td>
-    <td>{{ station.code }}</td>
-    <td>{{ station.measure_means }}</td>
-    <td>{{ station.district }}</td>
-<!--    <td><a href="{% url 'manager:stationDetail' station.id %}" ><button>edit</button></a>-->
-    <td><button onclick="edit({{ station.id }})">edit</button>
-    <button onclick="deleteUnit({{ station.id }})" >delete</button></td>
+    <td>{{ record.name_cn }}</td>
+    <td>{{ record.code }}</td>
+    <td>{{ record.measure_means }}</td>
+    <td>{{ record.district }}</td>
+    <td><button onclick="edit({{ record.id }})">detail</button>
+    <button onclick="deleteUnit({{ record.id }})" >delete</button></td>
     </tr>
     {% endfor %}
+    </tbody>
+    <tfoot></tfoot>
 </table>
 {% include './paginator.html' %}
 <a href="javascript:history.go(-1);">返回上一页</a>
 </div>
 
 {% endblock %}
-</div>
+

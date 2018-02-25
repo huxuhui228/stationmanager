@@ -1,11 +1,17 @@
 {% extends './base.html' %}
-<div>
+    {% block title %}
+    <title>equip maintain list</title>
+    {% endblock %}
+{% block floatBtn %}
+<a href="javascript:;" onclick="newRecord('equipMaintainIndex')">新录入</a>
+{% endblock %}
+
 {% block main %}
 <div id="search_field">
-{% include './searchField.html' %}
+
 </div>
-<div id="dataTable">
-<table lay-filter="equipMaintainIndexTable">
+<div>
+<table id="dataTable" lay-filter="equipMaintainIndexTable">
     <thead>
         <tr>
             <th lay-data="{field:'number', width:80, sort: true}">序号</th>
@@ -16,6 +22,7 @@
             <th lay-data="{field:'note', width:200, sort: true}"></th>
         </tr>
     </thead>
+    <tbody>
     {% for record in equip_maintain_list %}
     <tr>
     <td>{{ forloop.counter }}</td>
@@ -23,14 +30,15 @@
     <td>{{ record.equip }}</td>
     <td>{{ record.intro }}</td>
     <td>{{ record.staff }}</td>
-    <td><button onclick="edit({{ record.id }})">edit</button>
+    <td><button onclick="edit({{ record.id }})">detail</button>
     <button onclick="deleteUnit({{ record.id }})" >delete</button></td>
     </tr>
     {% endfor %}
+    </tbody>
+    <tfoot></tfoot>
 </table>
 {% include './paginator.html' %}
 <a href="javascript:history.go(-1);">返回上一页</a>
 </div>
 
 {% endblock %}
-</div>
