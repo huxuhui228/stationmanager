@@ -30,39 +30,39 @@
 {% block body %}
 <!-- 侧边栏 -->
 {% if user.is_authenticated %}
-<nav class="tree">
-    <li>
-       <label class="level1menu"><a href="{% url 'manager:home' %}">Home</a></label>
-    </li>
-    <li >
-        <label class="level1menu" >台站</label>
-        <ol class="level2folder">
-            <li class="level2menu"><a href="{% url 'manager:equipStatusIndex' %}">信息</a></li>
-            <li class="level2menu"><a href="{% url 'manager:equipMaintainIndex' %}">维修信息</a></li>
-            <li class="level2menu"><a href="{% url 'manager:stationIndex' %}">台站库</a></li>
-            <li class="level2menu"></li>
-        </ol>
-    </li>
-    <li>
-        <label class="level1menu">设备</label>
-        <ol class="level2folder">
-             <li class="level2menu"><a href="{% url 'manager:deviceIndex' %}">设备库</a></li>
-        </ol>
-    </li>
-    <li>
-        <label class="level1menu">邮寄</label>
-        <ol class="level2folder">
-             <li class="level2menu"><a href="{% url 'manager:deleveryIndex' %}">查询</a></li>
-        </ol>
-    </li>
+<nav>
+<div><ul>
+       <label><a href="{% url 'manager:home' %}">Home</a></label>
+</ul></div>
+<div><ul>
+        <label>台站</label>
+        <ul>
+            <li><a href="{% url 'manager:equipStatusIndex' %}">信息</a></li>
+            <li><a href="{% url 'manager:equipMaintainIndex' %}">维修信息</a></li>
+            <li><a href="{% url 'manager:stationIndex' %}">台站库</a></li>
+        </ul>
+</ul></div>
+<div><ul>
+        <label>设备</label>
+        <ul>
+             <li><a href="{% url 'manager:deviceIndex' %}">设备库</a></li>
+        </ul>
+</ul></div>
+<div><ul>
+        <label>邮寄</label>
+        <ul>
+             <li><a href="{% url 'manager:deleveryIndex' %}">查询</a></li>
+        </ul>
+</ul></div>
 </nav>
 {% endif %}
-
+<div class="floatBtn">
 {% block floatBtn %}{% endblock %}
+</div>
 <!-- 主体部分  -->
-<section class="main">
+<div class="main">
 {% block main %}{% endblock %}
-</section>
+</div>
 {% endblock %}
 <footer>
 footer.
