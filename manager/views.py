@@ -280,7 +280,7 @@ class DeleveryIndexView(generic.ListView):
     context_object_name = 'delevery_list'
     template_name = 'manager/indexDelevery.html'
     paginate_by = 20
-    ordering = '-send_date'
+    ordering = ['-send_date','-back_date']
     district = 0
     mean = 0
     
@@ -300,9 +300,19 @@ class DeleveryIndexView(generic.ListView):
         if 'search_word' in filter_dict.keys():
             search_word = filter_dict['search_word']
             filter_dict.pop('search_word')
-            queryset = self.model.objects.filter(**filter_dict).filter(Q(receiver_unit__icontains=search_word))
+            queryset = self.model.objects.filter(**filter_dict).filter(Q(serial_num__icontains=search_word)
+                                                                       |Q(sender__icontains=search_word)
+                                                                       |Q(receiver_unit__icontains=search_word)
+                                                                       |Q(receiver__icontains=search_word)
+                                                                       |Q(back_serial_num__icontains=search_word)
+                                                                       |Q(back_unit__icontains=search_word)
+                                                                       |Q(back_sender__icontains=search_word)
+                                                                       |Q(back_receiver__icontains=search_word)
+                                                                       |Q(note__icontains=search_word)
+                                                                       ) \
+                                                .order_by('-send_date','-back_date')
         else:
-            queryset = self.model.objects.filter(**filter_dict)
+            queryset = self.model.objects.filter(**filter_dict).order_by('-send_date','-back_date')
         return queryset    
 
 @login_required(login_url=('/manager/login'))

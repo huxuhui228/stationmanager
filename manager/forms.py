@@ -1,9 +1,17 @@
-from django.forms import ModelForm,ClearableFileInput
+from django.forms import ModelForm,ClearableFileInput,DateInput,SelectDateWidget,TextInput
+import datetime
 from .models import *
+
 class DeleveryDetailForm(ModelForm):
     class Meta:
         model = equip_delivery_record
         fields = '__all__'
+        widgets = {
+            "send_date": SelectDateWidget(years=range(2016,datetime.date.today().year+1),
+                                          months={i:i for i in range(1,13)}),
+            "back_date": SelectDateWidget(years=range(2016,datetime.date.today().year+1),
+                                          months={i:i for i in range(1,13)}),
+        }
 
 class DeviceDetailForm(ModelForm):
     class Meta:

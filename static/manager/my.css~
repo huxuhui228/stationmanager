@@ -64,12 +64,9 @@ nav>div {
 
 
 nav a:hover {
-    background-color:green;
+    background-color:yellow;
 }
 
-nav a:active {
-    background-color:red;
-}
 nav>div ul {
     width: 100%;
     padding-left: 0;
@@ -78,13 +75,15 @@ nav>div ul {
 }
 
 nav>div>ul>label {
+    margin-top: 10px;
     float: left;
     width: 100%;
     background-color: #ADD8E6;
 }
 
 nav>div>ul>ul>li {
-    padding: 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
     float: left;
     width: 100%;
     background-color: #D5E4E9;

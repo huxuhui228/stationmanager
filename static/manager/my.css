@@ -75,13 +75,14 @@ nav>div ul {
 }
 
 nav>div>ul>label {
+    margin-top: 10px;
     float: left;
     width: 100%;
     background-color: #ADD8E6;
 }
 
 nav>div>ul>ul>li {
-    padding: 0;
+    margin-top: 5px;
     float: left;
     width: 100%;
     background-color: #D5E4E9;

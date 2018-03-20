@@ -157,8 +157,9 @@ function saveEdit(pk) {
 
 
 function newRecord(str) {
+    console.log('aaaaa');
     $.ajax({
-	   url: "/manager/"+str+"/new",
+	   url: "/"+str+"/new",
 	   type: "Get",
 	   success:function (result) {
 	   	   layer.open({
@@ -176,7 +177,7 @@ function newRecord(str) {
 
 function saveNew() {
     $.ajax({
-        url: "/manager/"+$('#par').val()+"/new",
+        url: "/"+$('#par').val()+"/new",
         type: "post",
         data: $(".newRecord").serialize(),
         success: function (result) {

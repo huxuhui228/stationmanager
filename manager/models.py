@@ -179,7 +179,7 @@ class equip_maintain_record(models.Model):
 class equip_delivery_record(models.Model):
 
     send_equip_type = models.ForeignKey('equip_type',null=True,blank=True,on_delete=models.CASCADE,related_name="寄出设备类型",verbose_name="寄出设备类型")
-    serial_num = models.CharField(max_length=64,blank=True,verbose_name="序列号")
+    serial_num = models.CharField(max_length=64,default='',blank=True,verbose_name="序列号")
     number = models.IntegerField(default=1,null=True,blank=True,verbose_name="寄出数量")
     send_date = models.DateField(null=True,blank=True,verbose_name="发件时间")
     sender = models.CharField(max_length=32,choices=SENDER_CHOICES,blank=True,verbose_name="发件人")
@@ -192,12 +192,13 @@ class equip_delivery_record(models.Model):
     back_sender = models.CharField(max_length=32,blank=True,verbose_name="寄回人")
     back_receiver = models.CharField(max_length=32,choices=SENDER_CHOICES,blank=True,verbose_name="寄回接收人")
     back_date = models.DateField(null=True,blank=True,verbose_name="寄回日期")
-    charge = models.FloatField(null=True,blank=True,verbose_name="维修收费")
+    charge = models.FloatField(blank=True,verbose_name="维修收费")
     note = models.TextField(max_length=256,blank=True)
 
     class Meta:
         verbose_name = '设备寄出记录'
         verbose_name_plural = '设备寄出记录'
+        ordering = ["-send_date","-back_date"]
     def __str__(self):
         return self.send_equip_type.model if self.send_equip_type else self.back_equip_type.model
 
