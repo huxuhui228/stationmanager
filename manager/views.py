@@ -316,6 +316,11 @@ class DeleveryIndexView(generic.ListView):
         return queryset    
 
 @login_required(login_url=('/manager/login'))
+def deleveryUnreturned(request):
+    queryset = equip_delivery_record.objects.filter(back_status='未返回')
+    return render(request,'manager/table.html',{'delevery_list':queryset})
+
+@login_required(login_url=('/manager/login'))
 def newDeleveryRecord(request):
     form = DeleveryDetailForm()
     if request.method == 'POST':

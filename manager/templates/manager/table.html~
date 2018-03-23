@@ -1,0 +1,25 @@
+<table class="layui-table" lay-even lay-skin="line">
+    <thead>
+    <tr>
+    <th>序号</th><th>寄出型号</th><th>序列号</th><th>接收单位</th><th>接收人</th><th>寄出日期</th><th>寄回型号</th><th>寄回序列号</th><th>寄回日期</th><th>返回状态</th><th>操作</th>
+    </tr>
+    <tbody>
+    {% for record in delevery_list %}
+    <tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ record.send_equip_type }}</td>
+    <td>{{ record.serial_num }}</td>
+    <td>{{ record.receiver_unit }}</td>
+    <td>{{ record.receiver }}</td>
+    <td>{{ record.send_date }}</td>
+    <td>{{ record.back_equip_type }}</td>
+    <td>{{ record.back_serial_num }}</td>
+    <td>{{ record.back_date }}</td>
+    <td class="backStatus">{{ record.back_status }}</td>
+    <td><button onclick="edit({{ record.id }})">detail</button>
+    <button onclick="deleteUnit({{ record.id }})" >delete</button></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot></tfoot>
+</table>

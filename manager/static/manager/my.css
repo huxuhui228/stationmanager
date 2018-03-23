@@ -155,7 +155,10 @@ table {
 	text-align: center;
 	border-collapse: collapse;
 	padding:2px;
+	white-space:nowrap; 
+	overflow:hidden;
 	}
+td{word-break: break-all; word-wrap:break-word;}
 .deleveryDetail>p>label {
 	margin-left:80px;
 	float: left;

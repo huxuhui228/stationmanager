@@ -6,11 +6,13 @@
     {% block title %}
     <title>manager</title>
     {% endblock %}
+<!--    <link rel="stylesheet" type="text/css" href="{% static 'manager/DataTables/datatables.min.css' %}"/>
+    <script type="text/javascript" src="{% static 'manager/DataTables/datatables.min.js' %}"></script>-->
     <link rel="stylesheet" type="text/css" href="{% static 'manager/my.css' %}" />
-<!--    <link rel="stylesheet" href="{% static 'manager/layui/css/layui.css' %}" />-->
+    <link rel="stylesheet" href="{% static 'manager/layui/css/layui.css' %}" />
         <script type="text/javascript" src="{% static 'manager/jquery-3.3.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'manager/layer/layer.js' %}"></script>
-<!--    <script type="text/javascript" src="{% static 'manager/layui/layui.js' %}"></script>-->
+    <script type="text/javascript" src="{% static 'manager/layui/layui.js' %}"></script>
     
     
 </head>
@@ -31,6 +33,9 @@
 <!-- 侧边栏 -->
 {% if user.is_authenticated %}
 <nav>
+
+
+
 <div><ul>
        <label><a href="{% url 'manager:home' %}">首页</a></label>
 </ul></div>

@@ -17,6 +17,7 @@ urlpatterns = [
     path(r'deleveryIndex/new', views.newDeleveryRecord, name='newDeleveryRecord'),
     path(r'deleveryIndex/<int:pk>', views.deleveryDetailView, name='deleveryDetail'),
     path(r'deleveryIndex/<int:pk>/delete', views.deleteDeleveryView, name='deleteDelevery'),
+    path(r'deleveryIndex/unreturned', views.deleveryUnreturned, name='deleveryUnreturned'),
     
     path(r'stationIndex/', views.StationIndexView.as_view(), name='stationIndex'),
     path(r'stationIndex/new', views.newStationRecord, name='newStationRecord'),

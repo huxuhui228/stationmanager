@@ -8,8 +8,9 @@
 
 {% block main %}
 {% include './filterKeyword.html' %}
-<div>
-<table id="dataTable">
+<a href="javascript:;" ><span onclick="selectUnreturned()">未返回</span></a>
+<div id="dataTable">
+<table class="layui-table" lay-even lay-skin="line" lay-size="sm">
     <thead>
     <tr>
     <th>序号</th><th>寄出型号</th><th>序列号</th><th>接收单位</th><th>接收人</th><th>寄出日期</th><th>寄回型号</th><th>寄回序列号</th><th>寄回日期</th><th>返回状态</th><th>操作</th>
@@ -34,17 +35,35 @@
     </tbody>
     <tfoot></tfoot>
 </table>
-</div>
+
 {% include './paginator.html' %}
+</div>
 <a href="javascript:history.go(-1);">返回上一页</a>
 {% endblock %}
 
 {% block js %}
-$(function () {
+$(document).ready(function(){
+    setcolor();
+});
+
+function setcolor() {
 	$(".backStatus").each(function () {
 			if ($(this).text()=='未返回') {
 			 $(this).css("color","red");
 		    }
+		    if ($(this).text()=='已返回') {
+			 $(this).css("color","blue");
+		    }
 	});
-});
+}
+function selectUnreturned(){
+    $.ajax({
+        type:'GET',
+        url:'/deleveryIndex/unreturned',
+        success:function (result) {
+            $('#dataTable').html(result);
+            setcolor();
+        }
+    });
+}
 {% endblock %}
