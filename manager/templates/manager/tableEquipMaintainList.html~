@@ -1,0 +1,26 @@
+<table class="layui-table" lay-even lay-skin="line" lay-size="sm">
+    <thead>
+        <tr>
+            <th lay-data="{field:'number', width:80, sort: true}">序号</th>
+            <th lay-data="{field:'name', width:200, sort: true}">台站</th>
+            <th lay-data="{field:'sierialNum', width:80, sort: true}">设备</th>
+            <th lay-data="{field:'measure_means', width:80, sort: true}">故障</th>
+            <th lay-data="{field:'district', width:80, sort: true}">维修人</th>
+            <th lay-data="{field:'note', width:200, sort: true}"></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for record in equip_maintain_list %}
+    <tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ record.station }}</td>
+    <td>{{ record.equip }}</td>
+    <td>{{ record.intro }}</td>
+    <td>{{ record.staff }}</td>
+    <td><button class="layui-btn layui-btn-primary layui-btn-sm" onclick="edit('equipMaintainIndex',{{ record.id }})"><i class="layui-icon">&#xe642;</i></button>
+    <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="deleteUnit('equipMaintainIndex',{{ record.id }})" ><i class="layui-icon">&#xe640;</i></button></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot></tfoot>
+</table>

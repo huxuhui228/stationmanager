@@ -1,7 +1,6 @@
 $(document).ready(
-
+ 
 function () {
-    
     filter_para = get_para();
     filter_para = filter_para[1];
 
@@ -23,6 +22,43 @@ function () {
 
     });
 });
+
+function getall(){
+    $.ajax({
+        type:"get",
+        url: $("li.layui-this").attr("lay-id"),
+        success:function(result){
+            $('.layui-show').html(result);
+        }
+    });
+
+}
+
+function newtab(tabid){
+  layui.use('element', function(){
+  var $ = layui.jquery
+  ,element = layui.element;
+    if ( $(".layui-tab-title li[lay-id='"+tabid+"']").length > 0 ) {
+        element.tabChange('tabs',tabid); 
+    }
+    else {
+        
+        $.ajax({
+          type:'GET',
+          url:"/"+tabid,
+          success:function (result) {
+                element.tabAdd('tabs', {
+                    title: tabid
+                    ,content: result
+                    ,id: tabid
+                  })
+            element.tabChange('tabs',tabid);  
+        }
+    });
+}
+});
+  }
+
 function get_para() {
     var filter_para = {};
     var parent_link = '';
@@ -44,32 +80,25 @@ function get_para() {
 }
 
 function deleteUnit(id){
-    record_num = $("#dataTable>tbody").find("tr").length;
+
     layer.confirm(
         '确定删除吗？', 
         { btn:['确定','取消'] }, 
         function (){
             $.ajax({
-                url: id+"/delete",
+                url: "/"+$("li.layui-this").attr("lay-id")+"/"+id+"/delete",
                 type: "Get",
                 success: 
                     function(data){
                         if (data=='1'){
-                            if (record_num == 1) {
-                                    filter_para = get_para();
-                                    parent_link = filter_para[0];
-                                    filter_para = filter_para[1];
-                                    filter_para["page"] = Number(filter_para["page"])-1;
-                                    window.location.href = getNewLink(parent_link,filter_para);
-                                }
-                            else {
-                                parent.location.reload();
-                                }}
+                            topage();
+                            }
                         else{
                             layer.alert('删除失败。')
                             }
                         },
                 })
+            layer.closeAll('dialog');
         },
         
         function () {
@@ -78,50 +107,27 @@ function deleteUnit(id){
       );
 }
 function setFilter(par,par_val){
-    filter_para = get_para();
-    parent_link = filter_para[0];
-    filter_para = filter_para[1];
-    delete filter_para["page"];
-    if (par_val=="all") {
-        delete filter_para[par];
-    }
-    else {
-        filter_para[par] = par_val;
-    }
-    new_link = getNewLink(parent_link,filter_para);
-    window.location.href = new_link;
-/*    $.ajax({
-        url: parent_link+"?"+new_link.substr(1,new_link.length),
+    console.log($("li.layui-this").attr("lay-id"));
+    $.ajax({
+        url: "/"+$("li.layui-this").attr("lay-id")+"/?"+par+"="+par_val,
         type:"GET",
-        success: function (data) {
-            $(".main").html(data);
-        
-        
+        success: function (result) {
+            $('.layui-show').html(result);
         }
-    })*/
+    });
 }
-function getNewLink(parent_link,filter_para) {
-    new_link = "";
-    for (var key in filter_para) {
-//        console.log(key+"======"+filter_para[key]);
-        new_link += "&"+key+"="+filter_para[key];
-    }
-    if (new_link.length>0) {
-        new_link = "?"+new_link.substr(1,new_link.length);
-    }
-    new_link = parent_link+new_link;
-    return new_link;
-}
+
 
 function edit(id) {
 	$.ajax({
-	   url: id,
+	   url: "/"+$("li.layui-this").attr("lay-id")+"/"+id,
 	   type: "Get",
 	   success:function (result) {
+	       
 	   	   layer.open({
 	   	       type: 1,
 	   	       title: "详细信息",
-	   	       area: '800px',
+	   	       area: ['960px','640px'],
 	   	       closeBtn: 1,
 	   	       shadeClose: true,
 	   	       scrollbar: false,
@@ -133,15 +139,17 @@ function edit(id) {
 
 function saveEdit(pk) {
     $.ajax({
-        url: pk,
+        url: '/'+$("li.layui-this").attr("lay-id")+'/'+pk,
         type: "post",
-        data: $(".detail").serialize(),
+        data: $("#detail").serialize(),
         success: function (result) {
+            
             if (result=='1') {
                 layer.alert("修改成功。",
                     function () {
                         layer.closeAll();
-                        top.location.reload();
+                        topage();
+//                        top.location.reload();
                     }
                 );
             }
@@ -156,14 +164,14 @@ function saveEdit(pk) {
 }
 
 
-function newRecord(str) {
+function newRecord() {
     $.ajax({
-	   url: "/"+str+"/new",
+	   url: "/"+$("li.layui-this").attr("lay-id")+"/new",
 	   type: "Get",
 	   success:function (result) {
 	   	   layer.open({
 	   	       type: 1,
-	   	       title: "new "+str,
+	   	       title: "new "+$("li.layui-this").attr("lay-id"),
 	   	       area: '800px',
 	   	       closeBtn: 1,
 	   	       shadeClose: true,
@@ -178,23 +186,23 @@ function saveNew() {
     $.ajax({
         url: "/"+$('#par').val()+"/new",
         type: "post",
-        data: $(".newRecord").serialize(),
+        data: $("#newRecord").serialize(),
         success: function (result) {
-            layer.alert(result);
             if (result=='1') {
                 layer.alert("添加成功。",
-                    function () {
+                    function (index) {
                         layer.closeAll();
-                        top.location.reload();
+                        topage();
                     }
                 );
+                
             }
             if (result=='2') {
                 layer.alert("添加失败，请检查。");
             }
             
-            
         }
     
     });
 }
+

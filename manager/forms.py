@@ -6,12 +6,12 @@ class DeleveryDetailForm(ModelForm):
     class Meta:
         model = equip_delivery_record
         fields = '__all__'
-        widgets = {
-            "send_date": SelectDateWidget(years=range(2016,datetime.date.today().year+1),
-                                          months={i:i for i in range(1,13)}),
-            "back_date": SelectDateWidget(years=range(2016,datetime.date.today().year+1),
-                                          months={i:i for i in range(1,13)}),
-        }
+        #widgets = {
+            #"send_date": SelectDateWidget(years=range(datetime.date.today().year,2015,-1),
+                                          #months={i:i for i in range(1,13)}),
+            #"back_date": SelectDateWidget(years=range(datetime.date.today().year,2015,-1),
+                                          #months={i:i for i in range(1,13)}),
+        #}
 
 class DeviceDetailForm(ModelForm):
     class Meta:

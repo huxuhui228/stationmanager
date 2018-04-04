@@ -1,44 +1,11 @@
-{% extends './base.html' %}
-    {% block title %}
-    <title>equip maintain list</title>
-    {% endblock %}
-{% block floatBtn %}
-<a href="javascript:;" onclick="newRecord('equipMaintainIndex')">新录入</a>
-{% endblock %}
 
-{% block main %}
-<div id="search_field">
-
-</div>
-<div>
-<table id="dataTable" lay-filter="equipMaintainIndexTable">
-    <thead>
-        <tr>
-            <th lay-data="{field:'number', width:80, sort: true}">序号</th>
-            <th lay-data="{field:'name', width:200, sort: true}">台站</th>
-            <th lay-data="{field:'sierialNum', width:80, sort: true}">设备</th>
-            <th lay-data="{field:'measure_means', width:80, sort: true}">故障</th>
-            <th lay-data="{field:'district', width:80, sort: true}">维修人</th>
-            <th lay-data="{field:'note', width:200, sort: true}"></th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for record in equip_maintain_list %}
-    <tr>
-    <td>{{ forloop.counter }}</td>
-    <td>{{ record.station }}</td>
-    <td>{{ record.equip }}</td>
-    <td>{{ record.intro }}</td>
-    <td>{{ record.staff }}</td>
-    <td><button onclick="edit({{ record.id }})">detail</button>
-    <button onclick="deleteUnit({{ record.id }})" >delete</button></td>
-    </tr>
-    {% endfor %}
-    </tbody>
-    <tfoot></tfoot>
-</table>
+{% include './filterKeyword.html' %}
+<button class="layui-btn layui-btn-sm" onclick="newRecord()"><i class="layui-icon">&#xe654;</i></button>
+{% include './tableEquipMaintainList.html' %}
 {% include './paginator.html' %}
-<a href="javascript:history.go(-1);">返回上一页</a>
-</div>
+<script>
+$(document).ready(function(){
+    setcolor();
+});
 
-{% endblock %}
+</script>

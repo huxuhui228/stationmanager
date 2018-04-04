@@ -1,0 +1,20 @@
+<table class="layui-table" lay-even lay-skin="line" lay-size="sm">
+    <thead>
+    <tr>
+    <th>序号</th><th>型号</th><th>序列号</th><th>备注</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for record in device_list %}
+    <tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ record.equip_type }}</td>
+    <td>{{ record.serial_num }}</td>
+    <td>{{ record.note }}</td>
+    <td><button class="layui-btn layui-btn-primary layui-btn-sm" onclick="edit('deviceIndex',{{ record.id }})"><i class="layui-icon">&#xe642;</i></button>
+    <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="deleteUnit('deviceIndex',{{ record.id }})" ><i class="layui-icon">&#xe640;</i></button></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot></tfoot>
+</table>

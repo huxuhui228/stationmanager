@@ -121,7 +121,7 @@ function edit(id) {
 	   	   layer.open({
 	   	       type: 1,
 	   	       title: "详细信息",
-	   	       area: '800px',
+	   	       area: ['960px','640px'],
 	   	       closeBtn: 1,
 	   	       shadeClose: true,
 	   	       scrollbar: false,
@@ -135,8 +135,9 @@ function saveEdit(pk) {
     $.ajax({
         url: pk,
         type: "post",
-        data: $(".detail").serialize(),
+        data: $("#detail").serialize(),
         success: function (result) {
+            
             if (result=='1') {
                 layer.alert("修改成功。",
                     function () {
@@ -157,7 +158,6 @@ function saveEdit(pk) {
 
 
 function newRecord(str) {
-    console.log('aaaaa');
     $.ajax({
 	   url: "/"+str+"/new",
 	   type: "Get",
@@ -179,7 +179,7 @@ function saveNew() {
     $.ajax({
         url: "/"+$('#par').val()+"/new",
         type: "post",
-        data: $(".newRecord").serialize(),
+        data: $("#newRecord").serialize(),
         success: function (result) {
             layer.alert(result);
             if (result=='1') {

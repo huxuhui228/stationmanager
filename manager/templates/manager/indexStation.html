@@ -1,47 +1,12 @@
-{% extends './base.html' %}
-    {% block title %}
-    <title>station list</title>
-    {% endblock %}
-{% block floatBtn %}
-<a href="javascript:;" onclick="newRecord('stationIndex')">新录入</a>
-{% endblock %}
 
-{% block main %}
-<div id="search_field">
-{% include './filterDistrict.html' %}
-{% include './filterMeasureMean.html' %}
 {% include './filterKeyword.html' %}
-</div>
-<div>
-<table id="dataTable" lay-filter="stationIndexTable">
-    <thead>
-        <tr>
-            <th lay-data="{field:'number', width:80, sort: true}">序号</th>
-            <th lay-data="{field:'name', width:200, sort: true}">名称</th>
-            <th lay-data="{field:'sierialNum', width:80, sort: true}">编号</th>
-            <th lay-data="{field:'measure_means', width:80, sort: true}">手段</th>
-            <th lay-data="{field:'district', width:80, sort: true}">市域</th>
-            <th lay-data="{field:'note', width:200, sort: true}"></th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for record in station_list %}
-    <tr>
-    <td>{{ forloop.counter }}</td>
-    <td>{{ record.name_cn }}</td>
-    <td>{{ record.code }}</td>
-    <td>{{ record.measure_means }}</td>
-    <td>{{ record.district }}</td>
-    <td><button onclick="edit({{ record.id }})">detail</button>
-    <button onclick="deleteUnit({{ record.id }})" >delete</button></td>
-    </tr>
-    {% endfor %}
-    </tbody>
-    <tfoot></tfoot>
-</table>
+<button class="layui-btn layui-btn-sm" onclick="newRecord('stationIndex')"><i class="layui-icon">&#xe654;</i></button>
+
+{% include './tableStationList.html' %}
 {% include './paginator.html' %}
-<a href="javascript:history.go(-1);">返回上一页</a>
-</div>
+<script>
+$(document).ready(function(){
+    setcolor();
+});
 
-{% endblock %}
-
+</script>

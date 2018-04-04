@@ -16,9 +16,8 @@
     <td>{{ record.back_serial_num }}</td>
     <td>{{ record.back_date }}</td>
     <td class="backStatus">{{ record.back_status }}</td>
-    <td><button onclick="edit({{ record.id }})">detail</button>
-    <button onclick="deleteUnit({{ record.id }})" >delete</button></td>
-    </tr>
+    <td><button class="layui-btn layui-btn-primary layui-btn-sm" onclick="edit({{ record.id }})"><i class="layui-icon">&#xe642;</i></button>
+    <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="deleteUnit({{ record.id }}+'/delete')" ><i class="layui-icon">&#xe640;</i></button></td>
     {% endfor %}
     </tbody>
     <tfoot></tfoot>

@@ -1,0 +1,12 @@
+{% extends './base.html' %}
+{% block main %}
+<div class="layui-tab layui-tab-brief" lay-allowClose="true" lay-filter="tabs">
+  <ul class="layui-tab-title">
+    <li class="layui-this">首页</li>
+  </ul>
+  <div class="layui-tab-content">
+    <div class="layui-tab-item layui-show">Welcome.</div>
+  </div>
+</div>
+
+{% endblock %}

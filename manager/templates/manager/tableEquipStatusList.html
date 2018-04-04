@@ -1,0 +1,28 @@
+<table class="layui-table" lay-even lay-skin="line" lay-size="sm">
+    <thead>
+        <tr>
+            <th lay-data="{field:'number', width:80, sort: true}">序号</th>
+            <th lay-data="{field:'name', width:200, sort: true}">台站名称</th>
+            <th lay-data="{field:'equiptype', width:80, sort: true}">设备型号</th>
+            <th lay-data="{field:'sierialNum', width:80, sort: true}">序列号</th>
+            <th lay-data="{field:'measure_means', width:80, sort: true}">IP</th>
+            <th lay-data="{field:'district', width:80, sort: true}">安装日期</th>
+            <th lay-data="{field:'note', width:200, sort: true}"></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for record in equip_status_list %}
+    <tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ record.station }}</td>
+    <td>{{ record.equipment.equip_type }}</td>
+    <td>{{ record.equipment.serial_num }}</td>
+    <td>{{ record.ip_address }}</td>
+    <td>{{ record.install_date }}</td>
+    <td><button class="layui-btn layui-btn-primary layui-btn-sm" onclick="edit({{ record.id }})"><i class="layui-icon">&#xe642;</i></button>
+    <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="deleteUnit({{ record.id }})" ><i class="layui-icon">&#xe640;</i></button></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot></tfoot>
+</table>

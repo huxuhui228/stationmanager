@@ -3,76 +3,120 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    {% block title %}
-    <title>manager</title>
-    {% endblock %}
-<!--    <link rel="stylesheet" type="text/css" href="{% static 'manager/DataTables/datatables.min.css' %}"/>
-    <script type="text/javascript" src="{% static 'manager/DataTables/datatables.min.js' %}"></script>-->
-    <link rel="stylesheet" type="text/css" href="{% static 'manager/my.css' %}" />
+
+
+
     <link rel="stylesheet" href="{% static 'manager/layui/css/layui.css' %}" />
-        <script type="text/javascript" src="{% static 'manager/jquery-3.3.1.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'manager/my.css' %}" />
+    <script type="text/javascript" src="{% static 'manager/jquery-3.3.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'manager/layer/layer.js' %}"></script>
     <script type="text/javascript" src="{% static 'manager/layui/layui.js' %}"></script>
     
     
+    
 </head>
 <body>
+
 <header>
 <div id="slogen">我们不维修仪器，我们只是仪器的搬运工。</div>
 <div id="loginMenu">
 {% if user.is_authenticated %}
-<span>Welcome {{ user }}.</span>
+<span>Welcome, {{ user }}.</span>
 <a href="{% url 'manager:logout' %}">Logout</a>
 {% else %}
 <a href="{% url 'manager:login' %}">Login</a>
 {% endif %}
 </div>
-
 </header>
 {% block body %}
 <!-- 侧边栏 -->
 {% if user.is_authenticated %}
+
 <nav>
 
+<ul class="layui-nav layui-nav-tree layui-bg-cyan layui-inline" lay-filter="demo">
+  <li class="layui-nav-item layui-nav-itemed">
+    <a href="{% url 'manager:home' %}">首页</a>
+  </li>
+    <li class="layui-nav-item layui-nav-itemed">
+    <a href="javascript:;">台站</a>
+    <dl class="layui-nav-child">
+        <dd><a id="equipStatusIndex" data-type="tabAdd" onclick="newtab('equipStatusIndex')" href="javascript:;">台站信息</a></dd>
+        <dd><a id="equipMaintainIndex" data-type="tabAdd" onclick="newtab('equipMaintainIndex')" href="javascript:;">维修信息</a></dd>
+        <dd><a id="stationIndex" data-type="tabAdd" onclick="newtab('stationIndex')" href="javascript:;">台站库</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item layui-nav-itemed">
+    <a href="javascript:;">设备</a>
+    <dl class="layui-nav-child">
+        <dd><a id="deviceIndex" data-type="tabAdd" onclick="newtab('deviceIndex')" href="javascript:;">设备信息</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item layui-nav-itemed">
+    <a href="javascript:;">邮寄</a>
+    <dl class="layui-nav-child">
+        <dd><a id="deleveryIndex" data-type="tabAdd" onclick="newtab('deleveryIndex')" href="javascript:;">查询</a></dd>
+        <dd><a id="unreturnedDelevery" data-type="tabAdd" onclick="newtab('deleveryIndex/unreturned')" href="javascript:;">未返回</a></dd>
+    </dl>
+  </li>
+</ul>
 
 
-<div><ul>
-       <label><a href="{% url 'manager:home' %}">首页</a></label>
-</ul></div>
-<div><ul>
-        <label>台站</label>
-        <ul>
-            <li><a href="{% url 'manager:equipStatusIndex' %}">信息</a></li>
-            <li><a href="{% url 'manager:equipMaintainIndex' %}">维修信息</a></li>
-            <li><a href="{% url 'manager:stationIndex' %}">台站库</a></li>
-        </ul>
-</ul></div>
-<div><ul>
-        <label>设备</label>
-        <ul>
-             <li><a href="{% url 'manager:deviceIndex' %}">设备库</a></li>
-        </ul>
-</ul></div>
-<div><ul>
-        <label>邮寄</label>
-        <ul>
-             <li><a href="{% url 'manager:deleveryIndex' %}">查询</a></li>
-        </ul>
-</ul></div>
 </nav>
+
+
+
 {% endif %}
 <div class="floatBtn">
 {% block floatBtn %}{% endblock %}
 </div>
 <!-- 主体部分  -->
 <div class="main">
-{% block main %}{% endblock %}
+{% block main %}
+<div class="layui-tab layui-tab-brief" lay-allowClose="true" lay-filter="tabs">
+  <ul class="layui-tab-title">
+    <li class="layui-this">首页</li>
+  </ul>
+  <div class="layui-tab-content">
+    <div class="layui-tab-item layui-show">Welcome.</div>
+  </div>
+</div>
+{% endblock %}
 </div>
 {% endblock %}
 <footer>
 footer.
 </footer>
-<script type="text/javascript" src="{% static 'manager/my.js' %}"></script>
+
+
 <script type="text/javascript" >{% block js %}{% endblock %}</script>
+<script>
+layui.use('element', function(){
+  var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+  
+  //监听导航点击
+  element.on('nav(demo)', function(elem){
+    //console.log(elem)
+    layer.msg(elem.text());
+  });
+});
+
+layui.use('util', function(){
+  var util = layui.util;
+  
+  //执行
+  util.fixbar({
+    bar2: true
+    ,click: function(type){
+      console.log(type);
+      if(type === 'bar2'){
+        alert('点击了bar1')
+      }
+    }
+  });
+});
+
+</script>
+<script type="text/javascript" src="{% static 'manager/my.js' %}"></script>
 </body>
 </html> 

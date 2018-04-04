@@ -1,4 +1,4 @@
-<table class="layui-table" lay-even lay-skin="line">
+<table class="layui-table" lay-even lay-skin="line" lay-size="sm">
     <thead>
     <tr>
     <th>序号</th><th>寄出型号</th><th>序列号</th><th>接收单位</th><th>接收人</th><th>寄出日期</th><th>寄回型号</th><th>寄回序列号</th><th>寄回日期</th><th>返回状态</th><th>操作</th>
@@ -16,9 +16,8 @@
     <td>{{ record.back_serial_num }}</td>
     <td>{{ record.back_date }}</td>
     <td class="backStatus">{{ record.back_status }}</td>
-    <td><button onclick="edit({{ record.id }})">detail</button>
-    <button onclick="deleteUnit({{ record.id }})" >delete</button></td>
-    </tr>
+    <td><button class="layui-btn layui-btn-sm" onclick="edit({{ record.id }})"><i class="layui-icon">&#xe642;</i></button>
+    <button class="layui-btn layui-btn-sm" onclick="deleteUnit({{ record.id }})" ><i class="layui-icon">&#xe640;</i></button></td>
     {% endfor %}
     </tbody>
     <tfoot></tfoot>

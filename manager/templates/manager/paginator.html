@@ -1,25 +1,73 @@
 {% if is_paginated %}
-<div class="pagination">
-  <ul>
-    {% if page_obj.has_previous %}
-    <span><a href="?page={{ page_obj.previous_page_number }}">前一页</a></span>
-    {% else %}
-    <span class="active"><a>前一页</a></span>
-    {% endif %}
-
-    {% for p in page_obj.paginator.page_range %}
-        {% ifequal p page_obj.number %}
-            <span class="active"><a>{{p}}</a></span>
-        {% else %}
-            <span><a href="?page={{p}}" title="第{{p}}页">{{p}}</a></span>
-        {% endifequal %}
-    {% endfor %}
-
-    {% if page_obj.has_next %}
-    <span><a href="?page={{ page_obj.next_page_number }}">后一页</a></span>
-    {% else %}
-    <span class="active"> <a>后一页</a></span>
-    {% endif %}
-  </ul>
-</div>
+<div id="paginator"></div>
 {% endif %}
+<script>
+search_word = document.getElementById('search_word').value;
+layui.use(['laypage', 'layer'], function(){
+  var laypage = layui.laypage
+  ,layer = layui.layer;
+  url = '/'+$("li.layui-this").attr("lay-id")+'/';
+    laypage.render({
+        elem: 'paginator'
+        ,count: {{ page_obj.paginator.count }}
+        ,limit: 20
+        ,curr: {{ page_obj.number }}
+        ,layout: ['count', 'prev', 'page', 'next', 'skip']
+        ,jump: function(obj, first){
+              if(!first){
+                if (search_word != '') {
+                	getList(url+'?page='+obj.curr+'&search_word='+search_word);
+                }
+                else {
+                	getList(url+'?page='+obj.curr);
+                }
+            }
+        }
+  });
+});
+
+
+function getList(url){
+    $.ajax({
+        type:"get",
+        url: url,
+        success:function(result){
+            $('.layui-show').html(result);
+        }
+    });
+
+}
+
+function topage() {
+    search_word = document.getElementById('search_word').value;
+    layui.use(['laypage', 'layer'], function(){
+      var laypage = layui.laypage
+      ,layer = layui.layer;
+      url = '/'+$("li.layui-this").attr("lay-id")+'/';
+        laypage.render({
+            elem: 'paginator'
+            ,count: {{ page_obj.paginator.count }}
+            ,limit: 20
+            ,curr: {{ page_obj.number }}
+            ,layout: ['count', 'prev', 'page', 'next', 'skip']
+            ,jump: function(obj, first){
+                if (page_obj && ) {
+                	
+                
+                    if (search_word != '') {
+                    	getList(url+'?page='+obj.curr+'&search_word='+search_word);
+                    }
+                    else {
+                    	getList(url+'?page='+obj.curr);
+                    }
+                }
+                else {
+                	getList(url);
+                }
+            }
+      });
+    });
+}
+
+</script>
+

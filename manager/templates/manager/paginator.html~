@@ -1,0 +1,30 @@
+{% if is_paginated %}
+<div id="paginator"></div>
+{% endif %}
+<script>
+search_word = document.getElementById('search_word').value;
+layui.use(['laypage', 'layer'], function(){
+  var laypage = layui.laypage
+  ,layer = layui.layer;
+  url = '/'+$("li.layui-this").attr("lay-id")+'/';
+    laypage.render({
+        elem: 'paginator'
+        ,count: {{ page_obj.paginator.count }}
+        ,limit: 20
+        ,curr: {{ page_obj.number }}
+        ,layout: ['count', 'prev', 'page', 'next', 'skip']
+        ,jump: function(obj, first){
+              if(!first){
+                if (search_word != '') {
+                	getList(url+'?page='+obj.curr+'&search_word='+search_word);
+                }
+                else {
+                	getList(url+'?page='+obj.curr);
+                }
+            }
+        }
+  });
+});
+
+</script>
+

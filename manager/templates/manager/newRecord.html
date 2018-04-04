@@ -1,8 +1,41 @@
-<form class="newRecord" method="POST"  enctype="multipart/form-data" onsubmit="return false;">
+<br />
+
+<form id="newRecord" class="layui-form" method="POST"  enctype="multipart/form-data" onsubmit="return false;">
+
 {% csrf_token %}
 <input type="hidden" id="par" name="par" value="{{ par }}">
-{{ form.as_p }}
+{% for field in form %}
+    <div class="layui-form-item">
+
+        <label class="layui-form-label layui-input-inline">{{ field.label }}</label>
+        {% if field.id_for_label == "id_send_date" or field.id_for_label == "id_back_date"%}
+            <div class="layui-input-inline" id="datefield">{{ field }}</div>
+        {% else %}
+        <div class="layui-input-inline">{{ field }}</div>
+        {% endif %}
+
+    </div>
+{% endfor %}
+
 <center>
-<button onclick="saveNew()">提交</button>
+<button onclick="saveNew()">保存</button>
 </center>
 </form>
+
+<br />
+<script>
+layui.use('form', function(){
+  var form = layui.form;
+  form.render();
+});
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+  lay('#datefield>input').each(function(){
+  laydate.render({
+    elem: this
+    ,trigger: 'click'
+    ,zIndex: 99999999
+  });
+}); 
+}); 
+</script>

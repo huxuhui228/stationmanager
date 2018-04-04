@@ -18,6 +18,8 @@ urlpatterns = [
     path(r'deleveryIndex/<int:pk>', views.deleveryDetailView, name='deleveryDetail'),
     path(r'deleveryIndex/<int:pk>/delete', views.deleteDeleveryView, name='deleteDelevery'),
     path(r'deleveryIndex/unreturned', views.deleveryUnreturned, name='deleveryUnreturned'),
+    path(r'deleveryIndex/unreturned/<int:pk>', views.deleveryDetailView, name='unreturnedDeleveryDetail'), 
+    path(r'deleveryIndex/unreturned/<int:pk>/delete', views.deleteDeleveryView, name='deleteUnreturnedDelevery'),     
     
     path(r'stationIndex/', views.StationIndexView.as_view(), name='stationIndex'),
     path(r'stationIndex/new', views.newStationRecord, name='newStationRecord'),

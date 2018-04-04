@@ -1,17 +1,29 @@
 body {
 	font-family: sans-serif;
 	background-color: #EEFFFF;
+	
 	}
 header {
+    float: left;
     display: inline;
     width: 100%;
     height:30px;
     position:fixed;
-    top:0;
+    top:0px;
+    left: 0px;
     z-index:1;
     opacity:1;
     color: #ffc;
     background: #79aec8;
+}
+footer {
+    width: 100%;
+    height:50px;
+    position:static;
+    bottom:0px;
+    left:0px;
+    text-align: center;
+
 }
 #slogen {
 	text-align: center;
@@ -33,69 +45,13 @@ header {
 }
 nav {
     top:10%;
-	width:120px;
-	height: 100%;
-	margin-left: 0;
-	
-	background-color:#f2f2f2;
-	overflow: hidden;
-	float: left;
+	width:240px;
+
 	position:fixed;
-	overflow-y: scroll;
-	}
-/*所有菜单项设置统一样式*/
-.tree li {
-	position: relative;
-	list-style: none;
-	margin: 0px;
-	padding: 0px;
-	}
-/*一级菜单加下边线*/
-.tree li{
-	border-bottom: 1px solid #d9d9d9;
-	}
-/*给有子菜单的菜单项添加背景图标*/
-.tree li label {
-	max-width:999px;
-	cursor: pointer;
-	display: block;
-	margin: 0px;
-	padding: 15px 10px 15px 70px;
-	text-align: left;
-	white-space:nowrap;
-	overflow:hidden;
-	}
-.tree li ol {
-	cursor: pointer;
-	display: block;
-	margin: 0px;
-	background-position:95% 50%;
-	white-space:nowrap;
-	overflow:hidden;
-	}
-.tree .level2folder {
-	text-align: left;
-	margin: 0px;
-	padding: 0px;
-	}
-/*不同层级的菜单字体大小不同*/
-.tree .level1menu{
-	background-color:#99CCCC;
-	padding:0px;
-	margin:0px;
-	font-size: 18px;
-	text-align: left;
-	}
-.tree .level2menu{
-	padding:0;
-	margin:0;
-	font-size:16px;
-	background-color:#a7a7a7;
-	text-align: center;
-	}
+}
 
 
-section {
+.main {
     margin-left: 200px;
     float:left;
     padding:10px;
@@ -103,7 +59,9 @@ section {
     width: 70%;
     overflow: auto;
     padding-top: 30px;
-    
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 .floatBtn {
     position: fixed;
@@ -113,13 +71,8 @@ section {
     background: #CCFFFF;
     text-align: center;
 }
-.main {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-}
+
 #search_field {
-    display: flex;
     text-align: left;
 }
 
@@ -155,10 +108,7 @@ table {
 	text-align: center;
 	border-collapse: collapse;
 	padding:2px;
-	white-space:nowrap; 
-	overflow:hidden;
 	}
-td{word-break: break-all; word-wrap:break-word;}
 .deleveryDetail>p>label {
 	margin-left:80px;
 	float: left;

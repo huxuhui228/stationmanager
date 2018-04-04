@@ -59,7 +59,7 @@ def homeView(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('manager:login'))
     else:
-        return render(request, "manager/home.html")
+        return render(request, "manager/base.html")
 
 class MyPagiantor():
     def get_context_data(self, **kwargs):
@@ -288,6 +288,8 @@ class DeleveryIndexView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['districts'] = district.objects.all()
         context['measure_means'] = measure_means.objects.all()
+        filter_dict = self.request.GET.dict()
+        context['search_word'] = filter_dict['search_word'] if 'search_word' in filter_dict.keys() else ''
         return context
     
     def get_queryset(self):
@@ -313,12 +315,12 @@ class DeleveryIndexView(generic.ListView):
                                                 .order_by('-send_date','-back_date')
         else:
             queryset = self.model.objects.filter(**filter_dict).order_by('-send_date','-back_date')
-        return queryset    
+        return queryset
 
 @login_required(login_url=('/manager/login'))
 def deleveryUnreturned(request):
     queryset = equip_delivery_record.objects.filter(back_status='未返回')
-    return render(request,'manager/table.html',{'delevery_list':queryset})
+    return render(request,'manager/tableDeleveryList.html',{'delevery_list':queryset})
 
 @login_required(login_url=('/manager/login'))
 def newDeleveryRecord(request):
@@ -356,7 +358,7 @@ def deleveryDetailView(request, pk):
     else:
         form = DeleveryDetailForm()
     print(pk)
-    return render(request, 'manager/detail.html', {'form':form, 'pk':pk})
+    return render(request, 'manager/detail.html', {'form':form, 'pk':pk, 'method':'deleveryIndex'})
 
 
 @login_required(login_url=('/manager/login'))

@@ -1,47 +1,11 @@
-{% extends './base.html' %}
-    {% block title %}
-    <title>delevery list</title>
-    {% endblock %}
-{% block floatBtn %}
-<a href="javascript:;" onclick="newRecord('deleveryIndex')">新录入</a>
-{% endblock %}
 
-{% block main %}
 {% include './filterKeyword.html' %}
-<a href="javascript:;" ><span onclick="selectUnreturned()">未返回</span></a>
-<div id="dataTable">
-<table class="layui-table" lay-even lay-skin="line" lay-size="sm">
-    <thead>
-    <tr>
-    <th>序号</th><th>寄出型号</th><th>序列号</th><th>接收单位</th><th>接收人</th><th>寄出日期</th><th>寄回型号</th><th>寄回序列号</th><th>寄回日期</th><th>返回状态</th><th>操作</th>
-    </tr>
-    <tbody>
-    {% for record in delevery_list %}
-    <tr>
-    <td>{{ forloop.counter }}</td>
-    <td>{{ record.send_equip_type }}</td>
-    <td>{{ record.serial_num }}</td>
-    <td>{{ record.receiver_unit }}</td>
-    <td>{{ record.receiver }}</td>
-    <td>{{ record.send_date }}</td>
-    <td>{{ record.back_equip_type }}</td>
-    <td>{{ record.back_serial_num }}</td>
-    <td>{{ record.back_date }}</td>
-    <td class="backStatus">{{ record.back_status }}</td>
-    <td><button onclick="edit({{ record.id }})">detail</button>
-    <button onclick="deleteUnit({{ record.id }})" >delete</button></td>
-    </tr>
-    {% endfor %}
-    </tbody>
-    <tfoot></tfoot>
-</table>
+<button class="layui-btn layui-btn-sm" onclick="newRecord('deleveryIndex')"><i class="layui-icon">&#xe654;</i></button>
 
+<input type="hidden" id="method" value="deleveryIndex"></input>
+{% include './tableDeleveryList.html' %}
 {% include './paginator.html' %}
-</div>
-<a href="javascript:history.go(-1);">返回上一页</a>
-{% endblock %}
-
-{% block js %}
+<script>
 $(document).ready(function(){
     setcolor();
 });
@@ -66,4 +30,4 @@ function selectUnreturned(){
         }
     });
 }
-{% endblock %}
+</script>
