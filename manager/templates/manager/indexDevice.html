@@ -2,7 +2,33 @@
 {% include './filterKeyword.html' %}
 <button class="layui-btn layui-btn-sm" onclick="newRecord('deviceIndex')"><i class="layui-icon">&#xe654;</i></button>
 {% include './tableDeviceList.html' %}
-{% include './paginator.html' %}
+{% if is_paginated %}
+<div id="deviceIndexPaginator"></div>
+<script>
+$(function() {
+    setpage();
+});
+
+function setpage() {
+
+    search_word = document.getElementById('search_word').value;
+    layui.use(['laypage', 'layer'], function(){
+      var laypage = layui.laypage
+      ,layer = layui.layer;
+        laypage.render({
+            elem: $("li.layui-this").attr("lay-id")+'Paginator'
+            ,count: {{ deviceIndexPageObj.paginator.count }}
+            ,limit: 20
+            ,curr: {{ deviceIndexPageObj.number }}
+            ,layout: ['count', 'prev', 'page', 'next', 'skip']
+            ,jump: function(obj, first){
+                 changepage(obj,first);
+            }
+      });
+    });
+}
+</script>
+{% endif %}
 <script>
 $(document).ready(function(){
     setcolor();

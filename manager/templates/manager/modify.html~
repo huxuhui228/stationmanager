@@ -1,0 +1,51 @@
+
+<br />
+
+<form id="detail" class="layui-form" action="{{ pk }}" method="POST"  enctype="multipart/form-data" onsubmit="return false;">
+
+{% csrf_token %}
+<input type="hidden" name="" id="method" value="{{ method }}"/>
+{% for field in form %}
+    <div class="layui-form-item">
+
+        <label class="layui-form-label layui-input-inline">{{ field.label }}</label>
+        {% if field.id_for_label == "id_send_date" or field.id_for_label == "id_back_date"%}
+            <div class="layui-input-inline" id="datefield">{{ field }}</div>
+        {% else %}
+        <div class="layui-input-inline">{{ field }}</div>
+        {% endif %}
+
+    </div>
+{% endfor %}
+
+<center class="buttons">
+<button id="editbtn" onclick="editableit()">修改</button>
+</center>
+</form>
+
+<br />
+<script>
+layui.use('form', function(){
+  var form = layui.form;
+  form.render();
+});
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+  lay('#datefield>input').each(function(){
+  laydate.render({
+    elem: this
+    ,trigger: 'click'
+    ,zIndex: 99999999
+  });
+}); 
+}); 
+function editableit(){
+   $("input").attr("disabled",false);
+   $("select").attr("disabled",false);
+   $("textarea").attr("disabled",false);
+   $("#editbtn").text("保存");
+   $("#editbtn").attr("onclick","saveEdit({{ pk }})");
+
+
+}
+</script>

@@ -9,17 +9,18 @@
     <div class="layui-form-item">
 
         <label class="layui-form-label layui-input-inline">{{ field.label }}</label>
-        {% if field.id_for_label == "id_send_date" or field.id_for_label == "id_back_date"%}
-            <div class="layui-input-inline" id="datefield">{{ field }}</div>
-        {% else %}
-        <div class="layui-input-inline">{{ field }}</div>
-        {% endif %}
+            <div class="layui-input-inline"
+            {% if "date" in field.id_for_label %}
+             id="datefield"
+            {% endif %}
+             >{{ field }}</div>
 
     </div>
 {% endfor %}
 
-<center>
-<button onclick="saveEdit({{ pk }})">修改</button>
+<center class="buttons">
+<button class="buttons" onclick="closeit()">关闭</button>&emsp;
+<button id="editbtn" onclick="editableit()">修改</button>
 </center>
 </form>
 
@@ -39,5 +40,19 @@ layui.use('laydate', function(){
   });
 }); 
 }); 
+function editableit(){
+   $("input").removeAttr("disabled");
+   $("select").removeAttr("disabled");
+   $("textarea").removeAttr("readonly");
+   $("#editbtn").text("保存");
+   $("#editbtn").attr("onclick","saveEdit({{ pk }})");
 
+
+}
+
+$(function(){
+   $("input").attr("disabled","disabled");
+   $("select").attr("disabled","disabled");
+   $("textarea").attr("readonly","readonly");
+});
 </script>

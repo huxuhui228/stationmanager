@@ -1,4 +1,4 @@
-$(document).ready(
+/*$(document).ready(
  
 function () {
     filter_para = get_para();
@@ -21,7 +21,77 @@ function () {
         }
 
     });
-});
+});*/
+
+function closeit() {
+    layer.closeAll();
+}
+
+
+
+function setcolor() {
+	$(".backStatus").each(function () {
+			if ($(this).text()=='未返回' || $(this).text()=='未完成') {
+			 $(this).css("color","red");
+		    }
+		    if ($(this).text()=='已返回' || $(this).text()=='已完成') {
+			 $(this).css("color","blue");
+		    }
+		    if ($(this).text()=='部分返回') {
+			 $(this).css("color","yellow");
+		    }
+		    if ($(this).text()=='无需返回') {
+			 $(this).css("color","green");
+		    }
+	});
+}
+function selectUnreturned(){
+    $.ajax({
+        type:'GET',
+        url:'/deleveryIndex/unreturned',
+        success:function (result) {
+            $('#dataTable').html(result);
+            setcolor();
+        }
+    });
+}
+
+function changepage(obj, first){
+            if(!first){
+		      if (obj) {
+                    search_word = document.getElementById('search_word').value;
+                    if (search_word != '') {
+                    	getList('/'+$("li.layui-this").attr("lay-id")+'/'+'?page='+obj.curr+'&search_word='+search_word);
+                    }
+                    else {
+                    	getList('/'+$("li.layui-this").attr("lay-id")+'/'+'?page='+obj.curr);
+                    }
+                }
+                else {
+                	getList('/'+$("li.layui-this").attr("lay-id")+'/');
+                }
+            }}
+function getList(url){
+    $.ajax({
+        type:"get",
+        url: url,
+        success:function(result){
+            $('.layui-show').html(result);
+        }
+    });
+
+}
+
+function refreshPage() {
+    search_word = document.getElementById('search_word').value;
+    curr_page = $("#"+$("li.layui-this").attr("lay-id")+"Paginator>"+".layui-laypage-curr em:last").text();
+    if (search_word != '') {
+    	getList('/'+$("li.layui-this").attr("lay-id")+'/'+'?page='+curr_page+'&search_word='+search_word);
+    }
+    else {
+    	getList('/'+$("li.layui-this").attr("lay-id")+'/'+'?page='+curr_page);
+    }
+}
 
 function getall(){
     $.ajax({
@@ -51,15 +121,17 @@ function newtab(tabid){
                     title: tabid
                     ,content: result
                     ,id: tabid
-                  })
-            element.tabChange('tabs',tabid);  
+                  });
+            
+            element.tabChange('tabs',tabid);
         }
     });
 }
 });
   }
 
-function get_para() {
+
+/*function get_para() {
     var filter_para = {};
     var parent_link = '';
     var str = window.location.href;
@@ -77,7 +149,7 @@ function get_para() {
         })
     }
     return [parent_link, filter_para];
-}
+}*/
 
 function deleteUnit(id){
 
@@ -91,7 +163,7 @@ function deleteUnit(id){
                 success: 
                     function(data){
                         if (data=='1'){
-                            topage();
+                            refreshPage();
                             }
                         else{
                             layer.alert('删除失败。')
@@ -107,7 +179,6 @@ function deleteUnit(id){
       );
 }
 function setFilter(par,par_val){
-    console.log($("li.layui-this").attr("lay-id"));
     $.ajax({
         url: "/"+$("li.layui-this").attr("lay-id")+"/?"+par+"="+par_val,
         type:"GET",
@@ -148,7 +219,7 @@ function saveEdit(pk) {
                 layer.alert("修改成功。",
                     function () {
                         layer.closeAll();
-                        topage();
+                        refreshPage();
 //                        top.location.reload();
                     }
                 );
@@ -172,7 +243,7 @@ function newRecord() {
 	   	   layer.open({
 	   	       type: 1,
 	   	       title: "new "+$("li.layui-this").attr("lay-id"),
-	   	       area: '800px',
+	   	       area: ['800px','640px'],
 	   	       closeBtn: 1,
 	   	       shadeClose: true,
 	   	       scrollbar: false,
@@ -188,11 +259,12 @@ function saveNew() {
         type: "post",
         data: $("#newRecord").serialize(),
         success: function (result) {
+            
             if (result=='1') {
                 layer.alert("添加成功。",
                     function (index) {
                         layer.closeAll();
-                        topage();
+                        refreshPage();
                     }
                 );
                 

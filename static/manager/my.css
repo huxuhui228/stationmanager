@@ -135,3 +135,11 @@ form label {
 	margin-right: 1em;
 	text-align: right;
 }
+
+textarea {
+    width:400px;
+    height:80px;
+}
+.jvectormap-container {
+    display: flex;
+}

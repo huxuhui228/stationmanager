@@ -1,8 +1,8 @@
 <table class="layui-table" lay-even lay-skin="line" lay-size="sm">
-    <thead>
-    <tr>
-    <th>序号</th><th>寄出型号</th><th>序列号</th><th>接收单位</th><th>接收人</th><th>寄出日期</th><th>寄回型号</th><th>寄回序列号</th><th>寄回日期</th><th>返回状态</th><th>操作</th>
-    </tr>
+    <thead><tr>
+    <th>序号</th><th>寄出型号</th><th>序列号</th><th>接收单位</th><th>接收人</th><th>寄出日期</th><th>寄回型号</th>
+    <th>寄回序列号</th><th>寄回日期</th><th>返回状态</th><th lay-data="{field:'note', title='操作' width:300}">操作</th>
+    </tr></thead>
     <tbody>
     {% for record in delevery_list %}
     <tr>

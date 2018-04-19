@@ -18,8 +18,9 @@
     </div>
 {% endfor %}
 
-<center>
-<button onclick="saveEdit('/'+$("li.layui-this").attr("lay-id")+'/'+{{ pk }})">修改</button>
+<center class="buttons">
+<button class="buttons" onclick="closeit()">关闭</button>&emsp;
+<button id="editbtn" onclick="editableit()">修改</button>
 </center>
 </form>
 
@@ -39,5 +40,19 @@ layui.use('laydate', function(){
   });
 }); 
 }); 
+function editableit(){
+   $("input").removeAttr("disabled");
+   $("select").removeAttr("disabled");
+   $("textarea").removeAttr("readonly");
+   $("#editbtn").text("保存");
+   $("#editbtn").attr("onclick","saveEdit({{ pk }})");
 
+
+}
+
+$(function(){
+   $("input").attr("disabled","disabled");
+   $("select").attr("disabled","disabled");
+   $("textarea").attr("readonly","readonly");
+});
 </script>

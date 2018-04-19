@@ -3,7 +3,34 @@
 <button class="layui-btn layui-btn-sm" onclick="newRecord('equipStatusIndex')"><i class="layui-icon">&#xe654;</i></button>
 
 {% include './tableEquipStatusList.html' %}
-{% include './paginator.html' %}
+{% if is_paginated %}
+<div id="equipStatusIndexPaginator"></div>
+<script>
+$(function() {
+    setpage();
+});
+
+function setpage() {
+
+    search_word = document.getElementById('search_word').value;
+    layui.use(['laypage', 'layer'], function(){
+      var laypage = layui.laypage
+      ,layer = layui.layer;
+      
+        laypage.render({
+            elem: $("li.layui-this").attr("lay-id")+'Paginator'
+            ,count: {{ equipStatusIndexPageObj.paginator.count }}
+            ,limit: 20
+            ,curr: {{ equipStatusIndexPageObj.number }}
+            ,layout: ['count', 'prev', 'page', 'next', 'skip']
+            ,jump: function(obj, first){
+                 changepage(obj,first);
+            }
+      });
+    });
+}
+</script>
+{% endif %}
 <script>
 $(document).ready(function(){
     setcolor();

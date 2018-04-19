@@ -1,12 +1,39 @@
 
 {% include './filterKeyword.html' %}
 <button class="layui-btn layui-btn-sm" onclick="newRecord()"><i class="layui-icon">&#xe654;</i></button>
-<input id="method" value="equipMaintainIndex"></input>
 {% include './tableEquipMaintainList.html' %}
+{% if is_paginated %}
+<div id="equipMaintainIndexPaginator"></div>
 {% include './paginator.html' %}
+{% endif %}
 <script>
 $(document).ready(function(){
     setcolor();
 });
 
+</script>
+<script>
+$(function() {
+    setpage();
+});
+
+function setpage() {
+
+    search_word = document.getElementById('search_word').value;
+    layui.use(['laypage', 'layer'], function(){
+      var laypage = layui.laypage
+      ,layer = layui.layer;
+      
+        laypage.render({
+            elem: $("li.layui-this").attr("lay-id")+'Paginator'
+            ,count: {{ equipMaintainIndexPageObj.paginator.count }}
+            ,limit: 20
+            ,curr: {{ equipMaintainIndexPageObj.number }}
+            ,layout: ['count', 'prev', 'page', 'next', 'skip']
+            ,jump: function(obj, first){
+                 changepage(obj,first);
+            }
+      });
+    });
+}
 </script>

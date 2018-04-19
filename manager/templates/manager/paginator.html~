@@ -1,14 +1,13 @@
-{% if is_paginated %}
-<div id="paginator"></div>
-{% endif %}
-<script>
-search_word = document.getElementById('search_word').value;
+<script type="text/javascript" >
+
+
+/*search_word = document.getElementById('search_word').value;
 layui.use(['laypage', 'layer'], function(){
   var laypage = layui.laypage
   ,layer = layui.layer;
   url = '/'+$("li.layui-this").attr("lay-id")+'/';
     laypage.render({
-        elem: 'paginator'
+        elem: $("li.layui-this").attr("lay-id")+'Paginator'
         ,count: {{ page_obj.paginator.count }}
         ,limit: 20
         ,curr: {{ page_obj.number }}
@@ -24,7 +23,82 @@ layui.use(['laypage', 'layer'], function(){
             }
         }
   });
-});
+});*/
 
+
+function getList(url){
+    $.ajax({
+        type:"get",
+        url: url,
+        success:function(result){
+            $('.layui-show').html(result);
+        }
+    });
+
+}
+
+/*function topage() {
+
+    search_word = document.getElementById('search_word').value;
+    layui.use(['laypage', 'layer'], function(){
+      var laypage = layui.laypage
+      ,layer = layui.layer;
+      url = '/'+$("li.layui-this").attr("lay-id")+'/';
+        laypage.render({
+            elem: $("li.layui-this").attr("lay-id")+'Paginator'
+            ,count: {{ page_obj.paginator.count }}
+            ,limit: 20
+            ,curr: {{ page_obj.number }}
+            ,layout: ['count', 'prev', 'page', 'next', 'skip']
+            ,jump: function(obj, first){
+		    if (obj) {
+                	
+                
+                    if (search_word != '') {
+                    	getList(url+'?page='+obj.curr+'&search_word='+search_word);
+                    }
+                    else {
+                    	getList(url+'?page='+obj.curr);
+                    }
+                }
+                else {
+                	getList(url);
+                }
+            }
+      });
+    });
+}*/
+
+function setpage(tabid) {
+    pageobj[tabid] = {{ deleveryIndexPageObj }}
+    console.log(pageobj[tabid].paginator.count);
+    console.log(tabid+'Paginator');
+    search_word = document.getElementById('search_word').value;
+    layui.use(['laypage', 'layer'], function(){
+      var laypage = layui.laypage
+      ,layer = layui.layer;
+      url = '/'+tabid+'/';
+        laypage.render({
+            elem: tabid+'Paginator'
+            ,count: pageocount
+            ,limit: 20
+            ,curr: pagenumber
+            ,layout: ['count', 'prev', 'page', 'next', 'skip']
+            ,jump: function(obj, first){
+            if(!first){
+		      if (obj) {
+                    if (search_word != '') {
+                    	getList(url+'?page='+obj.curr+'&search_word='+search_word);
+                    }
+                    else {
+                    	getList(url+'?page='+obj.curr);
+                    }
+                }
+                else {
+                	getList(url);
+                }
+            }}
+      });
+    });
+}
 </script>
-

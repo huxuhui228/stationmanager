@@ -1,5 +1,5 @@
 
   <input type="search" id="search_word" placeholder="搜索" value="{{ search_word }}" name="search_word" required>
-  <button type="submit" onclick="setFilter('search_word',document.getElementById('search_word').value)">搜索</button>
+  <button type="submit" onclick="setFilter('search_word',encodeURI(document.getElementById('search_word').value))">搜索</button>
   &nbsp;&nbsp;
-  <button type="submit" onclick="getall()">全部</button>
+  <button onclick="getall()">全部</button>

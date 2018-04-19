@@ -3,30 +3,35 @@
 <button class="layui-btn layui-btn-sm" onclick="newRecord('deleveryIndex')"><i class="layui-icon">&#xe654;</i></button>
 
 {% include './tableDeleveryList.html' %}
-{% include './paginator.html' %}
+
+{% if is_paginated %}
+<div id="deleveryIndexPaginator"></div>
 <script>
-$(document).ready(function(){
+$(function() {
+    setpage();
     setcolor();
 });
 
-function setcolor() {
-	$(".backStatus").each(function () {
-			if ($(this).text()=='未返回') {
-			 $(this).css("color","red");
-		    }
-		    if ($(this).text()=='已返回') {
-			 $(this).css("color","blue");
-		    }
-	});
-}
-function selectUnreturned(){
-    $.ajax({
-        type:'GET',
-        url:'/deleveryIndex/unreturned',
-        success:function (result) {
-            $('#dataTable').html(result);
-            setcolor();
-        }
+function setpage() {
+    layui.use(['laypage', 'layer'], function(){
+      var laypage = layui.laypage
+      ,layer = layui.layer;
+      
+        laypage.render({
+            elem: $("li.layui-this").attr("lay-id")+'Paginator'
+            ,count: {{ deleveryIndexPageObj.paginator.count }}
+            ,limit: 20
+            ,curr: {{ deleveryIndexPageObj.number }}
+            ,layout: ['count', 'prev', 'page', 'next', 'skip']
+            ,jump: function(obj, first){
+                changepage(obj,first);
+                }
+      });
     });
 }
 </script>
+{% endif %}
+
+
+
+

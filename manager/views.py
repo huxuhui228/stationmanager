@@ -288,6 +288,7 @@ class DeleveryIndexView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['districts'] = district.objects.all()
         context['measure_means'] = measure_means.objects.all()
+        context["deleveryIndexPageObj"] = context["page_obj"]
         filter_dict = self.request.GET.dict()
         context['search_word'] = filter_dict['search_word'] if 'search_word' in filter_dict.keys() else ''
         return context
@@ -374,7 +375,7 @@ class StationIndexView(generic.ListView):
     context_object_name = 'station_list'
     template_name = 'manager/indexStation.html'
     paginate_by = 20
-    ordering = ['district','name_cn']
+    ordering = ['name_cn']
     district = 0
     mean = 0
     
@@ -384,6 +385,9 @@ class StationIndexView(generic.ListView):
         context['districts'] = district.objects.all()
         #context['measure_means'] = dict(MEASURE_MEANS_CHOICE)
         context['measure_means'] = measure_means.objects.all()
+        filter_dict = self.request.GET.dict()
+        context['search_word'] = filter_dict['search_word'] if 'search_word' in filter_dict.keys() else ''        
+        context["stationIndexPageObj"] = context["page_obj"]        
         return context
     
     def get_queryset(self):
@@ -396,9 +400,9 @@ class StationIndexView(generic.ListView):
         if 'search_word' in filter_dict.keys():
             search_word = filter_dict['search_word']
             filter_dict.pop('search_word')
-            queryset = self.model.objects.filter(**filter_dict).filter(Q(name_cn__icontains=search_word))
+            queryset = self.model.objects.filter(**filter_dict).filter(Q(name_cn__icontains=search_word)).order_by("name_cn")
         else:
-            queryset = self.model.objects.filter(**filter_dict)
+            queryset = self.model.objects.filter(**filter_dict).order_by("name_cn")
         return queryset
 
 @login_required(login_url=('/manager/login'))
@@ -548,9 +552,9 @@ class EquipMaintainIndexView(generic.ListView):
         if 'search_word' in filter_dict.keys():
             search_word = filter_dict['search_word']
             filter_dict.pop('search_word')
-            queryset = self.model.objects.filter(**filter_dict).filter(Q(equip_maintain_record__icontains=search_word))
+            queryset = self.model.objects.filter(**filter_dict).filter(Q(equip_maintain_record__icontains=search_word)).order_by("-maintain_date")
         else:
-            queryset = self.model.objects.filter(**filter_dict)
+            queryset = self.model.objects.filter(**filter_dict).order_by("-maintain_date")
         return queryset
 
 @login_required(login_url=('/manager/login'))

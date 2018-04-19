@@ -44,9 +44,9 @@ TRANSMISSION_TYPE_CHOICE = (
     ('电台','电台')
     )
 SCHEDULE_status_CHOICE = (
-    ('1','未完成'),
-    ('2','已完成'),
-    ('3','已放弃'),
+    ('未完成','未完成'),
+    ('已完成','已完成'),
+    ('已放弃','已放弃'),
     )
 
 
@@ -78,7 +78,6 @@ class station(models.Model):
                                      #default='测震',blank=True)    
     project_source = models.CharField(max_length=32,blank=True,
                     default='十五',choices=PROCECT_CHOICE)
-
     #district = models.CharField(max_length=32,choices=DISTRICT_CHOICE,default='济南')
     district = models.ForeignKey('district', on_delete=models.CASCADE,null=True,blank=True)
     longtitude = models.FloatField(default=None,null=True,blank=True)
@@ -93,10 +92,9 @@ class station(models.Model):
     class Meta:
         verbose_name = '台站列表'
         verbose_name_plural = '台站列表'
+        ordering = ["name_cn"]
     def __str__(self):
         return self.name_cn
-
-
 
 class equip_manu(models.Model):
     name = models.CharField(max_length=128)
@@ -130,7 +128,6 @@ class equipment(models.Model):
 
     equip_type = models.ForeignKey('equip_type',on_delete=models.CASCADE) 
     serial_num = models.CharField(max_length=64,blank=True)
-    station = models.ForeignKey('station',on_delete=models.CASCADE)
     note = models.TextField(max_length=256,default='',blank=True)
 
     class Meta:
@@ -161,14 +158,19 @@ class station_maintain_record(models.Model):
         return self.intro
 
 class equip_maintain_record(models.Model):
-    station = models.ForeignKey('station',on_delete=models.CASCADE)
-    equip = models.ForeignKey('equipment',on_delete=models.CASCADE)
-    intro = models.TextField(max_length=128,blank=True)
-    fault_startdate = models.DateTimeField(auto_now=True,null=True,blank=True)
-    fault_enddate = models.DateTimeField(auto_now=True,null=True,blank=True)
-    maintain_date = models.DateTimeField(auto_now=True,null=True,blank=True)
-    staff = models.CharField(max_length=32,blank=True)
-    note = models.TextField(max_length=256,default='',blank=True)
+    station = models.CharField(max_length=32,blank=True,verbose_name="台站")
+    #station = models.ForeignKey('station',on_delete=models.CASCADE)
+    equip = models.CharField(max_length=32,blank=True,verbose_name="设备")
+    #equip = models.ForeignKey('equipment',on_delete=models.CASCADE)
+    intro = models.TextField(max_length=128,blank=True,verbose_name="描述")
+    submitter = models.CharField(max_length=32,blank=True,verbose_name="报修人")
+    maintain_date = models.DateField(null=True,blank=True,verbose_name="处理时间")
+    fault_startdate = models.DateField(null=True,blank=True,verbose_name="开始时间")
+    fault_enddate = models.DateField(null=True,blank=True,verbose_name="恢复时间")
+    
+    staff = models.CharField(max_length=32,choices=SENDER_CHOICES,blank=True,verbose_name="处理人")
+    status = models.CharField(max_length=32,choices=SCHEDULE_status_CHOICE,default='已完成',blank=True,verbose_name="完成状态")
+    note = models.TextField(max_length=256,default='',blank=True,verbose_name="说明")
 
     class Meta:
         verbose_name = '设备维修记录'

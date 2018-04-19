@@ -67,13 +67,6 @@ nav dd {
     flex-direction: column;
 }
 
-.layui-tab-title {
-    position: fixed;
-    top: 90px;
-    left: 50px;
-    background: #CCFFFF;
-    text-align: center;
-}
 .floatBtn {
     position: fixed;
     width: 80px;
@@ -141,4 +134,16 @@ form label {
 	width: 10em;
 	margin-right: 1em;
 	text-align: right;
+}
+
+textarea {
+    width:400px;
+    height:80px;
+}
+.jvectormap-container {
+    display: flex;
+}
+.layui-tab-title {
+    position: fixed;
+    left: 200px;
 }
